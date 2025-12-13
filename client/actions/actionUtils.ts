@@ -22,8 +22,7 @@ const dummyProducts = Array.from({ length: 50 }, (_, i) => ({
 }))
 
 export const getData = async (url: string) => {
-
-    await wait(2000);
+    await wait(6000);
 
     try {
         // const headers = await authConfig();
@@ -38,7 +37,6 @@ export const getData = async (url: string) => {
         //     throw new Error(data.message || "Something went wrong, Please try again!");
         // }
         // return data;
-        console.log(dummyProducts.find(p=> p.slug === url));
 
         return { success: true, message: "Data fetched successfully", data: dummyProducts.find((p) => p.slug === url) };
 

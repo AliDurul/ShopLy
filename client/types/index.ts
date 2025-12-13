@@ -6,8 +6,8 @@ export interface CartItem {
     image: string;
     quantity: number;
     category?: string;
-    size?: string;
-    color?: string;
+    size: string;
+    color: string;
     availableSizes?: string[];
     availableColors?: string[];
 }
@@ -26,5 +26,8 @@ export interface IFilterState {
     patterns: string[]
     lifestyle: string[]
     activityType: string[]
+    warranty: string[]
+    connectivity: string[]
+    roomType: string[]
     freeShipping: boolean
 }

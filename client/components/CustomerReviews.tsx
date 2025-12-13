@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Label } from './ui/label';
 
 interface CustomerReviewsProps {
     product: any;
@@ -126,7 +127,7 @@ export default function CustomerReviews({ product }: CustomerReviewsProps) {
 
                     {/* Rating Selector */}
                     <div>
-                        <label className="text-sm font-medium mb-2 block">Rating</label>
+                        <Label id='rating' className="mb-2">Rating</Label>
                         <div className="flex gap-2">
                             {[1, 2, 3, 4, 5].map((rating) => (
                                 <button
@@ -152,8 +153,9 @@ export default function CustomerReviews({ product }: CustomerReviewsProps) {
 
                     {/* Title */}
                     <div>
-                        <label className="text-sm font-medium mb-2 block">Review Title</label>
+                        <Label id='title' className="mb-2">Review Title</Label>
                         <input
+                            id='title'
                             type="text"
                             placeholder="Sum up your experience..."
                             value={newReview.title}
@@ -164,8 +166,9 @@ export default function CustomerReviews({ product }: CustomerReviewsProps) {
 
                     {/* Content */}
                     <div>
-                        <label className="text-sm font-medium mb-2 block">Your Review</label>
+                        <Label id='content' className="mb-2">Your Review</Label>
                         <Textarea
+                            id='content'
                             placeholder="Share details about your experience..."
                             value={newReview.content}
                             onChange={(e) => setNewReview({ ...newReview, content: e.target.value })}

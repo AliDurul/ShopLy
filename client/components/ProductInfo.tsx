@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Heart, Share2, Truck, Shield, RotateCw } from 'lucide-react';
 import { useCartActions } from '@/store/cartStore';
-import { slugify } from '@/lib/utils';
+import { useUrlParams } from '@/hooks/useUrlParams';
 
 interface ProductInfoProps {
     product: any;
@@ -13,8 +13,12 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ product }: ProductInfoProps) {
     const { addItem } = useCartActions();
-    const [selectedSize, setSelectedSize] = useState('M');
-    const [selectedColor, setSelectedColor] = useState('Black');
+    const { getParam, updateUrlParams } = useUrlParams();
+    const selectedSize = getParam('size', 'M') as string;
+    const selectedColor = getParam('color', 'Black') as string;
+    // const [selectedSize, setSelectedSize] = useState('M');
+    // const [selectedColor, setSelectedColor] = useState('Black');
+
     const [quantity, setQuantity] = useState(1);
     const [isWishlisted, setIsWishlisted] = useState(false);
 
@@ -35,7 +39,6 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             category: product.brand,
             size: selectedSize,
             color: selectedColor,
-            quantity,
         });
     };
 
@@ -79,7 +82,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                     ))}
                 </div>
                 <span className="text-sm text-muted-foreground">{product.ratings} out of 5</span>
-                <span className="text-sm text-muted-foreground">({Math.floor(Math.random() * 500) + 100} reviews)</span>
+                <span className="text-sm text-muted-foreground">({100} reviews)</span>
             </div>
 
             {/* Price Section */}
@@ -92,6 +95,10 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                     </Badge>
                 </div>
                 <p className="text-sm text-green-600 font-medium">In Stock (24 items available)</p>
+                {/* <p className="text-muted-foreground leading-relaxed">
+                    {product.description ||
+                        `Experience premium quality with our ${product.name}. high-quality materials ert or sophisticated elegance, this ${product.name} delivers on both fronts. Its timeless design ensures it remains a staple in your wardrobe for years to come.`}
+                </p> */}
             </div>
 
             <Separator />
@@ -101,17 +108,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 <label className="font-semibold text-sm">Size: <span className="text-primary">{selectedSize}</span></label>
                 <div className="flex flex-wrap gap-2">
                     {sizes.map((size) => (
-                        <button
+                        <Button
+                            variant={'primary-outline'}
+                            size={'sm'}
                             key={size}
-                            onClick={() => setSelectedSize(size)}
-                            className={`px-4 py-2 border rounded-lg transition-all ${
-                                selectedSize === size
-                                    ? 'border-primary bg-primary text-white'
-                                    : 'border-gray-300 hover:border-primary'
-                            }`}
+                            onClick={() => updateUrlParams({ size })}
+                            className={` ${selectedSize === size
+                                ? 'border-primary bg-primary text-white hover:bg-primary/90'
+                                : 'border-gray-300 hover:border-primary hover:bg-transparent hover:text-primary text-foreground'
+                                }`}
                         >
                             {size}
-                        </button>
+                        </Button>
                     ))}
                 </div>
             </div>
@@ -121,17 +129,18 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 <label className="font-semibold text-sm">Color: <span className="text-primary">{selectedColor}</span></label>
                 <div className="flex flex-wrap gap-2">
                     {colors.map((color) => (
-                        <button
+                        <Button
+                            variant={'primary-outline'}
+                            size={'sm'}
                             key={color}
-                            onClick={() => setSelectedColor(color)}
-                            className={`px-4 py-2 border rounded-lg transition-all ${
-                                selectedColor === color
-                                    ? 'border-primary bg-primary text-white'
-                                    : 'border-gray-300 hover:border-primary'
-                            }`}
+                            onClick={() => updateUrlParams({ color })}
+                            className={` ${selectedColor === color
+                                ? 'border-primary bg-primary text-white hover:bg-primary/90'
+                                : 'border-gray-300 hover:border-primary hover:bg-transparent hover:text-primary text-foreground'
+                                }`}
                         >
                             {color}
-                        </button>
+                        </Button>
                     ))}
                 </div>
             </div>
@@ -140,12 +149,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             <div className="space-y-3">
                 <label className="font-semibold text-sm">Quantity</label>
                 <div className="flex items-center border border-gray-300 rounded-lg w-fit">
-                    <button
+                    <Button
+                        variant={'ghost'}
                         onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className=" hover:bg-gray-100! rounded-none transition-colors"
                     >
                         −
-                    </button>
+                    </Button>
                     <input
                         type="number"
                         value={quantity}
@@ -153,12 +163,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                         className="w-12 text-center border-none focus:outline-none"
                         min="1"
                     />
-                    <button
+                    <Button
+                        variant={'ghost'}
                         onClick={() => setQuantity(quantity + 1)}
-                        className="px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="hover:bg-gray-100! rounded-none transition-colors"
                     >
                         +
-                    </button>
+                    </Button>
                 </div>
             </div>
 
@@ -199,23 +210,23 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             <Separator />
 
             {/* Shipping & Returns Info */}
-            <div className="space-y-4 bg-gray-50 p-4 rounded-lg">
+            <div className="flex justify-evenly flex-wrap bg-gray-50 p-4 rounded-lg">
                 <div className="flex gap-3">
-                    <Truck className="size-5 text-primary flex-shrink-0 mt-1" />
+                    <Truck className="size-5 text-primary shrink-0 mt-1" />
                     <div>
                         <p className="font-semibold text-sm">Free Shipping</p>
                         <p className="text-xs text-muted-foreground">On orders over $50</p>
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <RotateCw className="size-5 text-primary flex-shrink-0 mt-1" />
+                    <RotateCw className="size-5 text-primary shrink-0 mt-1" />
                     <div>
                         <p className="font-semibold text-sm">Easy Returns</p>
                         <p className="text-xs text-muted-foreground">30-day return policy</p>
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <Shield className="size-5 text-primary flex-shrink-0 mt-1" />
+                    <Shield className="size-5 text-primary shrink-0 mt-1" />
                     <div>
                         <p className="font-semibold text-sm">Secure Checkout</p>
                         <p className="text-xs text-muted-foreground">SSL encrypted payment</p>

@@ -34,7 +34,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
     };
 
     return (
-        <div className="w-full max-w-md mx-auto space-y-4">
+        <div className="w-full  space-y-4">
             {/* Main Image with Zoom */}
             <div
                 className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden group cursor-zoom-in"
@@ -102,7 +102,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                             key={index}
                             onClick={() => setMainImageIndex(index)}
                             className={cn(
-                                'relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all',
+                                'relative shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all',
                                 mainImageIndex === index
                                     ? 'border-primary'
                                     : 'border-gray-200 hover:border-gray-400'

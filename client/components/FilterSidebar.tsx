@@ -98,6 +98,9 @@ export function FilterSidebar() {
         patterns: parseListParam('patterns'),
         lifestyle: parseListParam('lifestyle'),
         activityType: parseListParam('activityType'),
+        warranty: parseListParam('warranty'),
+        connectivity: parseListParam('connectivity'),
+        roomType: parseListParam('roomType'),
         freeShipping: getParam('freeShipping') === 'true'
     }
     console.log(filters);
@@ -113,7 +116,7 @@ export function FilterSidebar() {
         updateUrlParams({ [key]: serialized }, options)
     }
 
-    const toggleArrayFilter = (key: keyof Pick<IFilterState, 'cat' | 'subCat' | 'brands' | 'ratings' | 'sizes' | 'colors' | 'materials' | 'fitTypes' | 'patterns' | 'lifestyle' | 'activityType'>, value: string | number) => {
+    const toggleArrayFilter = (key: keyof Pick<IFilterState, 'cat' | 'subCat' | 'brands' | 'ratings' | 'sizes' | 'colors' | 'materials' | 'fitTypes' | 'patterns' | 'lifestyle' | 'activityType' | 'warranty' | 'connectivity' | 'roomType'>, value: string | number) => {
         const current = filters[key] as (string | number)[]
         const updated = current.includes(value)
             ? current.filter(item => item !== value)
@@ -135,6 +138,9 @@ export function FilterSidebar() {
             patterns: null,
             lifestyle: null,
             activityType: null,
+            warranty: null,
+            connectivity: null,
+            roomType: null,
             freeShipping: null
         }, { replace: true })
     }
@@ -151,6 +157,9 @@ export function FilterSidebar() {
         filters.patterns.length +
         filters.lifestyle.length +
         filters.activityType.length +
+        filters.warranty.length +
+        filters.connectivity.length +
+        filters.roomType.length +
         (filters.freeShipping ? 1 : 0) +
         (filters.priceRange[0] !== defaultPriceMin || filters.priceRange[1] !== defaultPriceMax ? 1 : 0)
 
@@ -282,6 +291,104 @@ export function FilterSidebar() {
                             </Collapsible>
                         )}
 
+                        {/* Warranty (Electronics) */}
+                        {categoryConfig?.warranty && categoryConfig.warranty.length > 0 && (
+                            <div className="space-y-3">
+                                <Collapsible className="space-y-1.5">
+                                    <CollapsibleTrigger className="w-full group">
+                                        <div className="h-9 py-2 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 w-full flex items-center justify-between px-0 rounded-none">
+                                            <span className="font-medium text-sm text-left">Warranty</span>
+                                            <ChevronDown
+                                                className="size-4 ml-auto transition-transform text-muted-foreground group-data-[state=open]:rotate-180 group-data-[state=open]:text-primary"
+                                                aria-hidden="true"
+                                            />
+                                        </div>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                        <div className="space-y-2">
+                                            {categoryConfig.warranty.map((w) => (
+                                                <div key={w} className="flex items-center space-x-2">
+                                                    <Checkbox
+                                                        id={`warranty-${w}`}
+                                                        checked={filters.warranty.includes(w)}
+                                                        onCheckedChange={() => toggleArrayFilter('warranty', w)}
+                                                    />
+                                                    <Label htmlFor={`warranty-${w}`} className="text-sm font-normal cursor-pointer">
+                                                        {w}
+                                                    </Label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CollapsibleContent>
+                                </Collapsible>
+                            </div>
+                        )}
+
+                        {/* Connectivity (Electronics) */}
+                        {categoryConfig?.connectivity && categoryConfig.connectivity.length > 0 && (
+                            <div className="space-y-3">
+                                <Collapsible className="space-y-1.5">
+                                    <CollapsibleTrigger className="w-full group">
+                                        <div className="h-9 py-2 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 w-full flex items-center justify-between px-0 rounded-none">
+                                            <span className="font-medium text-sm text-left">Connectivity</span>
+                                            <ChevronDown
+                                                className="size-4 ml-auto transition-transform text-muted-foreground group-data-[state=open]:rotate-180 group-data-[state=open]:text-primary"
+                                                aria-hidden="true"
+                                            />
+                                        </div>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                        <div className="space-y-2">
+                                            {categoryConfig.connectivity.map((conn) => (
+                                                <div key={conn} className="flex items-center space-x-2">
+                                                    <Checkbox
+                                                        id={`connectivity-${conn}`}
+                                                        checked={filters.connectivity.includes(conn)}
+                                                        onCheckedChange={() => toggleArrayFilter('connectivity', conn)}
+                                                    />
+                                                    <Label htmlFor={`connectivity-${conn}`} className="text-sm font-normal cursor-pointer">
+                                                        {conn}
+                                                    </Label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CollapsibleContent>
+                                </Collapsible>
+                            </div>
+                        )}
+
+                        {/* Room Type (Home-Living) */}
+                        {categoryConfig?.roomType && categoryConfig.roomType.length > 0 && (
+                            <div className="space-y-3">
+                                <Collapsible className="space-y-1.5">
+                                    <CollapsibleTrigger className="w-full group">
+                                        <div className="h-9 py-2 hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 w-full flex items-center justify-between px-0 rounded-none">
+                                            <span className="font-medium text-sm text-left">Room Type</span>
+                                            <ChevronDown
+                                                className="size-4 ml-auto transition-transform text-muted-foreground group-data-[state=open]:rotate-180 group-data-[state=open]:text-primary"
+                                                aria-hidden="true"
+                                            />
+                                        </div>
+                                    </CollapsibleTrigger>
+                                    <CollapsibleContent>
+                                        <div className="space-y-2">
+                                            {categoryConfig.roomType.map((room) => (
+                                                <div key={room} className="flex items-center space-x-2">
+                                                    <Checkbox
+                                                        id={`room-${room}`}
+                                                        checked={filters.roomType.includes(room)}
+                                                        onCheckedChange={() => toggleArrayFilter('roomType', room)}
+                                                    />
+                                                    <Label htmlFor={`room-${room}`} className="text-sm font-normal cursor-pointer">
+                                                        {room}
+                                                    </Label>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </CollapsibleContent>
+                                </Collapsible>
+                            </div>
+                        )}
                         <Separator />
 
                         {/* Price Range */}
@@ -342,6 +449,33 @@ export function FilterSidebar() {
                                                     <span className="text-muted-foreground">& up</span>
                                                 </Label>
                                             </div>
+                                        ))}
+                                        {filters.warranty.map((w) => (
+                                            <Badge key={w} variant="secondary" className="gap-1">
+                                                {w}
+                                                <X
+                                                    className="size-3 cursor-pointer"
+                                                    onClick={() => toggleArrayFilter('warranty', w)}
+                                                />
+                                            </Badge>
+                                        ))}
+                                        {filters.connectivity.map((conn) => (
+                                            <Badge key={conn} variant="secondary" className="gap-1">
+                                                {conn}
+                                                <X
+                                                    className="size-3 cursor-pointer"
+                                                    onClick={() => toggleArrayFilter('connectivity', conn)}
+                                                />
+                                            </Badge>
+                                        ))}
+                                        {filters.roomType.map((room) => (
+                                            <Badge key={room} variant="secondary" className="gap-1">
+                                                {room}
+                                                <X
+                                                    className="size-3 cursor-pointer"
+                                                    onClick={() => toggleArrayFilter('roomType', room)}
+                                                />
+                                            </Badge>
                                         ))}
                                     </div>
                                 </CollapsibleContent>

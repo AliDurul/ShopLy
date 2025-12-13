@@ -10,11 +10,11 @@ import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
 
 export default async function ProductDetail({ params }: IPageParams) {
-
+    'use cache';
     const { slug } = await params;
 
     const response = await getData(slug);
-    const product = response.data;
+    const product: any = response.data;
 
     if (!response.success || !response.data) {
         return (
@@ -31,7 +31,7 @@ export default async function ProductDetail({ params }: IPageParams) {
     }
 
     return (
-        <main className="max-w-7xl mx-auto px-5 py-8">
+        <main className="container mx-auto px-5 py-8">
             {/* Breadcrumb */}
             <nav className="flex items-center gap-2 text-sm mb-8">
                 <Link href="/" className="text-muted-foreground hover:text-primary transition-colors">
@@ -45,36 +45,22 @@ export default async function ProductDetail({ params }: IPageParams) {
                 <span className="text-foreground font-medium line-clamp-1">{product.name}</span>
             </nav>
 
-            {/* Main Product Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                {/* Image Gallery */}
-                <div className="flex justify-center">
-                    <ProductImageGallery images={product.images} productName={product.name} />
-                </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
+                <ProductImageGallery images={product.images} productName={product.name} />
 
-                {/* Product Info */}
-                <div className="flex flex-col justify-start">
-                    <ProductInfo product={product} />
-                </div>
+                <ProductInfo product={product} />
             </div>
 
-            <Separator className="mb-16" />
+            <ProductDetails product={product} />
 
-            <div className="mb-16">
-                <ProductDetails product={product} />
-            </div>
+            {/* <Separator className="mb-16" /> */}
+            <Separator className='my-10 max-w-3/6 mx-auto bg-secondary' />
 
-            <Separator className="mb-16" />
+            <CustomerReviews product={product} />
 
-            <div className="mb-16">
-                <CustomerReviews product={product} />
-            </div>
+            <Separator className='my-10 max-w-3/6 mx-auto bg-secondary' />
 
-            <Separator className="mb-16" />
-
-            <div>
-                <RelatedProducts category={product.brand} excludeId={product.id} />
-            </div>
+            <RelatedProducts category={product.brand} excludeId={product.id} />
         </main>
     )
 }
