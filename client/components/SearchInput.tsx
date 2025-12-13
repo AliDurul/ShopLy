@@ -6,6 +6,9 @@ import { LuSearch } from "react-icons/lu";
 import { useUrlParams } from "@/hooks/useUrlParams";
 
 export default function SearchInput() {
+
+    
+
     const { updateUrlParams, searchParams } = useUrlParams();
     const urlQuery = searchParams.get("q") || "";
 

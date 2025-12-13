@@ -1,13 +1,12 @@
 import Link from 'next/link'
-import React from 'react'
-import { FiSearch, FiHeart, FiShoppingCart, FiUser } from 'react-icons/fi'
+import React, { Suspense } from 'react'
+import { FiSearch, FiHeart, FiUser } from 'react-icons/fi'
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
 import { Badge } from './ui/badge'
 import SearchInput from './SearchInput'
-import { Categories } from './Categories'
 import { Separator } from './ui/separator'
 import { Cart } from './Cart'
-import { Skeleton } from './ui/skeleton'
+import { HeaderCategories } from './HeaderCategories'
 
 export default function Header() {
     return (
@@ -37,7 +36,9 @@ export default function Header() {
                         </Link>
 
                         {/* Search Bar */}
-                        <SearchInput />
+                        <Suspense>
+                            <SearchInput />
+                        </Suspense>
 
                         {/* Right Side Actions */}
                         <div className='flex items-center gap-6'>
@@ -73,7 +74,6 @@ export default function Header() {
 
                             <Cart />
 
-
                         </div>
                     </div>
 
@@ -90,7 +90,7 @@ export default function Header() {
                     </div>
                 </div>
                 <Separator />
-                <Categories />
+                <HeaderCategories />
             </header>
         </>
     )

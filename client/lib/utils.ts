@@ -11,6 +11,7 @@ export const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
+
 export const formatCurrency = (amount: number, locale = 'en-US', currency = 'USD') => {
   return amount.toLocaleString(locale, {
     style: 'currency',

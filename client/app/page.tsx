@@ -59,7 +59,6 @@ export default function Home() {
     discountPrice: 1000,
   }));
 
-
   const women = Array.from({ length: 20 }).map((_, index) => ({
     id: index + 1,
     name: `women-Product ${index + 1}`,
@@ -69,8 +68,6 @@ export default function Home() {
     price: 1200,
     discountPrice: 1000,
   }));
-
-
 
   const tech = Array.from({ length: 20 }).map((_, index) => ({
     id: index + 1,
@@ -159,6 +156,7 @@ export default function Home() {
       href: '/category/beauty',
     }
   ];
+  
   return (
     <main className="space-y-14 ">
       <Hero />

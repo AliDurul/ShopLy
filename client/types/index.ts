@@ -11,3 +11,20 @@ export interface CartItem {
     availableSizes?: string[];
     availableColors?: string[];
 }
+
+// ------------------Products Interface------------------
+export interface IFilterState {
+    cat: string
+    priceRange: [number, number]
+    ratings: number[]
+    subCat: string[]
+    brands: string[]
+    sizes: string[]
+    colors: string[]
+    materials: string[]
+    fitTypes: string[]
+    patterns: string[]
+    lifestyle: string[]
+    activityType: string[]
+    freeShipping: boolean
+}

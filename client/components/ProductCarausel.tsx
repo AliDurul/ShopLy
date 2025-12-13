@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import ProdCarauselLinks from "./ProdCarauselLinks";
 import ProdCarauselList from "./ProdCarauselList";
 
@@ -20,7 +21,7 @@ export default function ProductCarausel({ title, subTitle, categories, products 
                     <h2 className='text-xl font-semibold capitalize items-start'>{title}</h2>
                     <p className='text-gray-400 text-base/normal'>{subTitle}</p>
                 </div>
-                {categories && <ProdCarauselLinks categories={categories} />}
+                {categories && <Suspense><ProdCarauselLinks categories={categories} /></Suspense>}
             </div>
             <ProdCarauselList products={products} />
         </section>

@@ -2,6 +2,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useCallback, useRef } from 'react';
 
 export const useUrlParams = () => {
+
     const router = useRouter();
     const searchParams = useSearchParams();
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
