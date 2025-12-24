@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "./ui/input-group";
 import { LuSearch } from "react-icons/lu";
 import { useUrlParams } from "@/hooks/useUrlParams";
+import { useRouter } from "next/navigation";
 
 export default function SearchInput() {
 
-    
-
-    const { updateUrlParams, searchParams } = useUrlParams();
+    const router = useRouter();
+    const { searchParams } = useUrlParams();
     const urlQuery = searchParams.get("q") || "";
 
     const [query, setQuery] = useState(urlQuery);
@@ -19,11 +19,13 @@ export default function SearchInput() {
     }, [urlQuery]);
 
     const handleSearch = () => {
-        if (query.trim()) {
-            updateUrlParams({ q: query.trim(), page: null }, { debounce: 0, replace: true });
-        } else {
-            updateUrlParams({ q: null, page: null }, { debounce: 0, replace: true });
+        const trimmed = query.trim();
+        const params = new URLSearchParams();
+        if (trimmed) {
+            params.set("q", trimmed);
         }
+        const qs = params.toString();
+        router.push(`/products${qs ? `?${qs}` : ""}`);
     };
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

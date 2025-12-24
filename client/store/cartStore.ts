@@ -9,8 +9,6 @@ interface Actions {
     updateItem: (productId: number, quantity: number) => void;
     updateItemVariant: (productId: number, patch: Partial<Pick<CartItem, 'size' | 'color'>>) => void;
     clearCart: () => void;
-    cartItemCount: () => number;
-    subtotal: () => number;
     setHydrating: (v: boolean) => void;
 }
 
@@ -73,13 +71,7 @@ const useCartStore = create<State>()(
                 },
                 clearCart: () => {
                     set({ cartItems: [] });
-                },
-                cartItemCount: () => {
-                    return get().cartItems.reduce((count, item) => count + item.quantity, 0);
-                },
-                subtotal: () => {
-                    return get().cartItems.reduce((total, item) => total + (item?.discountPrice ?? item.price) * item.quantity, 0);
-                },
+                }
             }
         }),
         {
@@ -104,3 +96,12 @@ const useCartStore = create<State>()(
 export const useCartItems = () => useCartStore((state) => state.cartItems);
 export const useCartHydrating = () => useCartStore((state) => state.isHydrating);
 export const useCartActions = () => useCartStore((state) => state.actions);
+
+// Reactive computed selectors - these will trigger re-renders
+export const useCartItemCount = () => useCartStore((state) => 
+    state.cartItems.reduce((count, item) => count + item.quantity, 0)
+);
+
+export const useCartSubtotal = () => useCartStore((state) => 
+    state.cartItems.reduce((total, item) => total + (item?.discountPrice ?? item.price) * item.quantity, 0)
+);

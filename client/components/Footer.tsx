@@ -2,11 +2,36 @@
 import React from "react";
 import Link from "next/link";
 import { LiaShippingFastSolid } from "react-icons/lia";
-import { Facebook, Instagram, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Twitter, Youtube, Truck, RotateCcw, Lock, Gift, Headphones } from "lucide-react";
 
 export default function Footer() {
+  const benefits = [
+    { icon: Truck, title: "Free Shipping", description: "For all Orders Over $100" },
+    { icon: RotateCcw, title: "30 Days Returns", description: "For an Exchange Product" },
+    { icon: Lock, title: "Secured Payment", description: "Payment Cards Accepted" },
+    { icon: Gift, title: "Special Gifts", description: "Our First Product Order" },
+    { icon: Headphones, title: "Support 24/7", description: "Contact us Anytime" },
+  ];
+
   return (
     <footer className="mt-20 bg-background border-t border-neutral-200/60">
+      <section className="mx-auto w-full max-w-7xl px-6 py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          {benefits.map((benefit, idx) => {
+            const Icon = benefit.icon;
+            return (
+              <div
+                key={idx}
+                className="flex flex-col items-center text-center p-6 rounded-lg border border-neutral-200/60 bg-card transition-all duration-300 hover:shadow-lg hover:border-primary/50 hover:bg-primary/5 group"
+              >
+                <Icon className="size-8 text-primary mb-3 group-hover:scale-110 transition-transform duration-300" />
+                <h3 className="font-semibold text-sm">{benefit.title}</h3>
+                <p className="text-xs text-muted-foreground mt-1">{benefit.description}</p>
+              </div>
+            );
+          })}
+        </div>
+      </section>
       <section className="mx-auto w-full max-w-7xl px-6 py-10">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div>

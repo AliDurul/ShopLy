@@ -4,29 +4,75 @@ import { Badge } from "./ui/badge"
 import { Button } from "./ui/button"
 import { LuExpand, LuHeart } from "react-icons/lu"
 import Image from "next/image"
-import { useCartActions } from "@/store/cartStore"
+import { useCartActions, useCartItems } from "@/store/cartStore"
+import { useFavoriteActions, useFavoriteItems } from "@/store/favoriteStore"
 import Link from "next/link";
 import { slugify } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 
 export default function ProductCard({ product }: { product: any }) {
-    const { addItem } = useCartActions();
+    const { addItem, updateItem, removeItem } = useCartActions();
+    const items = useCartItems();
+    const { toggleFavorite } = useFavoriteActions();
+    const favoriteItems = useFavoriteItems();
+    const router = useRouter();
+    const productHref = `/products/${slugify(product.name)}`;
 
+    const cartItem = items.find(item => item.id === product.id);
+    const isInCart = !!cartItem;
+    const isFavorited = favoriteItems.some(item => item.id === product.id);
 
     return (
         <Card className="min-w-64 overflow-hidden py-0 gap-4  hover:shadow-xl transition-shadow duration-300">
-            <div className="relative overflow-hidden group">
+            <div
+                className="relative overflow-hidden group cursor-pointer"
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${product.name}`}
+                onClick={() => router.push(productHref)}
+                onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        router.push(productHref);
+                    }
+                }}
+            >
                 {/* Discount badge */}
                 <Badge className="absolute left-3 top-3 z-10" variant="destructive">
                     {`-${Math.round(((product.price - product.discountPrice) / product.price) * 100)}%`}
                 </Badge>
                 {/* Action icons */}
                 <div className="absolute right-3 -top-20 group-hover:top-3   transition-all duration-500 z-10 flex flex-col items-center gap-2">
-                    <Button variant={'ghost'} size={'sm'} className="rounded-full p-0 cursor-pointer bg-white hover:bg-primary/80! hover:text-primary-foreground">
+                    <Button
+                        variant={'ghost'}
+                        size={'sm'}
+                        className="rounded-full p-0 cursor-pointer bg-white hover:bg-primary/80! hover:text-primary-foreground"
+                        onClick={(e) => e.stopPropagation()}
+                    >
                         <LuExpand />
                     </Button>
-                    <Button variant={'ghost'} size={'sm'} className="rounded-full p-0 cursor-pointer bg-white hover:bg-primary/80! hover:text-primary-foreground">
-                        <LuHeart />
+                    <Button
+                        variant={'ghost'}
+                        size={'sm'}
+                        className={`rounded-full p-0 cursor-pointer bg-white transition-colors ${
+                            isFavorited 
+                                ? 'text-red-500 hover:text-red-600' 
+                                : 'hover:bg-primary/80! hover:text-primary-foreground'
+                        }`}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            toggleFavorite({
+                                id: product.id,
+                                name: product.name,
+                                price: product.price,
+                                discountPrice: product.discountPrice,
+                                image: product.images[0],
+                                brand: product.brand,
+                            });
+                        }}
+                    >
+                        <LuHeart className={isFavorited ? 'fill-current' : ''} />
                     </Button>
                 </div>
                 <Image
@@ -50,7 +96,7 @@ export default function ProductCard({ product }: { product: any }) {
             <CardHeader className="px-4 pb-0">
                 <CardDescription className="text-muted-foreground">{product.brand}</CardDescription>
                 <CardTitle className="line-clamp-1 text-sm hover:text-primary">
-                    <Link href={`products/${slugify(product.name)}`}>
+                    <Link href={productHref}>
                         {product.name}
                     </Link>
                 </CardTitle>
@@ -70,23 +116,62 @@ export default function ProductCard({ product }: { product: any }) {
                 </div>
             </CardContent>
             <CardFooter className="px-4 pb-4">
-                <Button
-                    variant={'primary-outline'}
-                    className="w-full hover:bg-primary/80 shadow-md shadow-primary/10 cursor-pointer"
-                    onClick={() => addItem({
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        discountPrice: product.discountPrice,
-                        image: product.images[0],
-                        category: product.brand,
-                    })}
-                >
-                    <span className="inline-flex items-center gap-2">
-                        <svg viewBox="0 0 24 24" className="size-4"><path fill="currentColor" d="M7 22q-.825 0-1.413-.587T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.587 1.413T7 22Zm10 0q-.825 0-1.413-.587T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.587 1.413T17 22ZM6.15 6l3.05 6h7.1l2.75-6H6.15Zm-1.6-2h15.5q.6 0 .912.488t.063.987l-3.85 8.4q-.25.55-.75.888T15.85 15H8.3l-1.1 2h11.8v2H7.1q-.725 0-1.113-.612T5.7 17.8l1.6-2.9L3 4H1V2h3q.375 0 .7.2t.45.55L6.5 6Z" /></svg>
-                        ADD TO CART
-                    </span>
-                </Button>
+                {isInCart ? (
+                    <Button
+                        variant={'ghost'}
+                        className="w-full hover:bg-primary/60 shadow-md shadow-primary/10  flex p-0 overflow-hidden transition-all duration-300">
+                        
+                        <div
+                            className="rounded-r-xl p-2 px-3  bg-primary/60 hover:bg-primary/80 h-full justify-center items-center flex cursor-pointer text-white"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (cartItem!.quantity === 1) {
+                                    // removeItem(product.id);
+                                    return
+                                } else {
+                                    updateItem(product.id, cartItem!.quantity - 1);
+                                }
+                            }}
+                            aria-label="Decrease quantity"
+                        >
+                            <svg viewBox="0 0 24 24" className="size-4">
+                                <path fill="currentColor" d="M19 12.998H5v-2h14z" />
+                            </svg>
+                        </div>
+
+                        <span className="text-lg font-semibold tabular-nums min-w-8 text-center flex-1">
+                            {cartItem!.quantity}
+                        </span>
+                        
+                        <div
+                            className="rounded-l-xl px-3 bg-secondary/60 hover:bg-secondary/80 h-full justify-center items-center flex p-2 cursor-pointer text-white"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                updateItem(product.id, cartItem!.quantity + 1);
+                            }}
+                            aria-label="Increase quantity"
+                        >
+                            <svg viewBox="0 0 24 24" className="size-4">
+                                <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z" />
+                            </svg>
+                        </div>
+
+                    </Button>
+                ) : (
+                    <Button
+                        variant={'primary-outline'}
+                        className="w-full hover:bg-primary/80 shadow-md shadow-primary/10 cursor-pointer"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            addItem(product);
+                        }}
+                    >
+                        <span className="inline-flex items-center gap-2">
+                            <svg viewBox="0 0 24 24" className="size-4"><path fill="currentColor" d="M7 22q-.825 0-1.413-.587T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.587 1.413T7 22Zm10 0q-.825 0-1.413-.587T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.587 1.413T17 22ZM6.15 6l3.05 6h7.1l2.75-6H6.15Zm-1.6-2h15.5q.6 0 .912.488t.063.987l-3.85 8.4q-.25.55-.75.888T15.85 15H8.3l-1.1 2h11.8v2H7.1q-.725 0-1.113-.612T5.7 17.8l1.6-2.9L3 4H1V2h3q.375 0 .7.2t.45.55L6.5 6Z" /></svg>
+                            ADD TO CART
+                        </span>
+                    </Button>
+                )}
             </CardFooter>
         </Card>
     )

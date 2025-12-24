@@ -25,19 +25,45 @@ export default function ProductImageGallery({ images, productName }: ProductImag
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!zoomActive) return;
-        
+
         const rect = e.currentTarget.getBoundingClientRect();
         const x = ((e.clientX - rect.left) / rect.width) * 100;
         const y = ((e.clientY - rect.top) / rect.height) * 100;
-        
+
         setZoomCoords({ x, y });
     };
 
     return (
-        <div className="w-full  space-y-4">
+        <div className="w-full lg:w-[90%]  space-y-4 flex md:flex-row flex-col gap-2">
+            {/* Thumbnails */}
+            {images.length > 1 && (
+                <div className="overflow-x-auto min-w-fit   order-2 md:order-1 flex md:flex-col gap-2">
+                    {images.map((image, index) => (
+                        <button
+                            key={index}
+                            onClick={() => setMainImageIndex(index)}
+                            className={cn(
+                                'relative shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all',
+                                mainImageIndex === index
+                                    ? 'border-primary'
+                                    : 'border-gray-200 hover:border-gray-400'
+                            )}
+                        >
+                            <Image
+                                src={image}
+                                alt={`${productName} thumbnail ${index + 1}`}
+                                fill
+                                className="w-full h-full object-cover"
+                                sizes="80px"
+                            />
+                        </button>
+                    ))}
+                </div>
+            )}
+
             {/* Main Image with Zoom */}
             <div
-                className="relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden group cursor-zoom-in"
+                className="order-1 md:order-2 relative w-full aspect-square bg-gray-100 rounded-lg overflow-hidden group cursor-zoom-in"
                 onMouseEnter={() => setZoomActive(true)}
                 onMouseLeave={() => setZoomActive(false)}
                 onMouseMove={handleMouseMove}
@@ -94,31 +120,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                 )}
             </div>
 
-            {/* Thumbnails */}
-            {images.length > 1 && (
-                <div className="flex gap-3 overflow-x-auto pb-2">
-                    {images.map((image, index) => (
-                        <button
-                            key={index}
-                            onClick={() => setMainImageIndex(index)}
-                            className={cn(
-                                'relative shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all',
-                                mainImageIndex === index
-                                    ? 'border-primary'
-                                    : 'border-gray-200 hover:border-gray-400'
-                            )}
-                        >
-                            <Image
-                                src={image}
-                                alt={`${productName} thumbnail ${index + 1}`}
-                                fill
-                                className="w-full h-full object-cover"
-                                sizes="80px"
-                            />
-                        </button>
-                    ))}
-                </div>
-            )}
+
         </div>
     );
 }

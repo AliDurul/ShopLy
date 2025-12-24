@@ -1,11 +1,10 @@
 import Link from 'next/link'
 import React, { Suspense } from 'react'
-import { FiSearch, FiHeart, FiUser } from 'react-icons/fi'
-import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip'
-import { Badge } from './ui/badge'
+import { FiSearch, FiUser } from 'react-icons/fi'
 import SearchInput from './SearchInput'
 import { Separator } from './ui/separator'
 import { Cart } from './Cart'
+import { Favorite } from './Favorite'
 import { HeaderCategories } from './HeaderCategories'
 
 export default function Header() {
@@ -49,28 +48,7 @@ export default function Header() {
                             </Link>
 
                             {/* Favorites */}
-                            <Link href="/favorites" className='relative  '>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <FiHeart size={22} className="text-gray-700 hover:text-red-500 transition-colors cursor-pointer" />
-                                    </TooltipTrigger>
-                                    <TooltipContent>
-                                        <p>Favorites</p>
-                                    </TooltipContent>
-                                </Tooltip>
-                                <Badge variant={'destructive'} className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
-                                    8
-                                </Badge>
-                                {/* {
-                                    isHydrating
-                                        ? <Skeleton className="bg-secondary absolute -top-2 -right-2 size-3 rounded-full px-1 font-mono " />
-                                        : cartItemCount > 0 && (
-                                            <Badge variant={'secondary'} className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
-                                                {cartItemCount}
-                                            </Badge>
-                                        )
-                                } */}
-                            </Link>
+                            <Favorite />
 
                             <Cart />
 

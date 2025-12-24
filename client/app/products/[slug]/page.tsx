@@ -1,5 +1,5 @@
 import { getData } from '@/actions/actionUtils';
-import React from 'react'
+import { Suspense } from 'react'
 import ProductImageGallery from '@/components/ProductImageGallery';
 import ProductInfo from '@/components/ProductInfo';
 import ProductDetails from '@/components/ProductDetails';
@@ -8,9 +8,9 @@ import RelatedProducts from '@/components/RelatedProducts';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import { ProductSkeletonGrid } from '@/components/Skeletons';
 
 export default async function ProductDetail({ params }: IPageParams) {
-    'use cache';
     const { slug } = await params;
 
     const response = await getData(slug);
@@ -56,11 +56,23 @@ export default async function ProductDetail({ params }: IPageParams) {
             {/* <Separator className="mb-16" /> */}
             <Separator className='my-10 max-w-3/6 mx-auto bg-secondary' />
 
-            <CustomerReviews product={product} />
+            <Suspense fallback={<div>Loading customer reviews...</div>}>
+                <CustomerReviews product={product} />
+            </Suspense>
 
             <Separator className='my-10 max-w-3/6 mx-auto bg-secondary' />
 
-            <RelatedProducts category={product.brand} excludeId={product.id} />
+            <div className="space-y-6">
+                <div>
+                    <h2 className="text-2xl font-bold mb-2">Related Products</h2>
+                    <p className="text-muted-foreground">You might also like these items</p>
+                </div>
+
+                {/* Products Grid */}
+                <Suspense fallback={<ProductSkeletonGrid length={5}/>}>
+                    <RelatedProducts category={product.brand} excludeId={product.id} />
+                </Suspense>
+            </div>
         </main>
     )
 }

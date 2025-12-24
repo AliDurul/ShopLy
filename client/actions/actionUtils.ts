@@ -49,7 +49,7 @@ export const getAllData = async ({ url, searchQueries, filterQueries, sortQuerie
 
     if (!url) return { success: false, error: 'URL parameter is required' };
 
-    console.log(searchQueries, filterQueries, sortQueries, customQuery);
+    // console.log(searchQueries, filterQueries, sortQueries, customQuery);
 
     const queryObject = buildQueryParams({
         searchQueries,

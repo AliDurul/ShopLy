@@ -103,7 +103,7 @@ export function FilterSidebar() {
         roomType: parseListParam('roomType'),
         freeShipping: getParam('freeShipping') === 'true'
     }
-    console.log(filters);
+    // console.log(filters);
     const serializeFilterValue = (value: unknown) => {
         if (value === null || value === undefined) return null
         if (Array.isArray(value)) return value.length ? value.join(',') : null

@@ -16,7 +16,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { FiShoppingCart } from "react-icons/fi"
 import { Badge } from "./ui/badge"
-import { useCartActions, useCartHydrating, useCartItems } from "@/store/cartStore"
+import { useCartActions, useCartHydrating, useCartItems, useCartItemCount, useCartSubtotal } from "@/store/cartStore"
 import { Skeleton } from "./ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -28,7 +28,9 @@ export function Cart() {
 
     const items = useCartItems();
     const isHydrating = useCartHydrating();
-    const { cartItemCount, updateItem, removeItem, subtotal } = useCartActions();
+    const { updateItem, removeItem } = useCartActions();
+    const cartItemCount = useCartItemCount();
+    const subtotal = useCartSubtotal();
 
     return (
         <Sheet>
@@ -45,9 +47,9 @@ export function Cart() {
                     {
                         isHydrating
                             ? <Skeleton className="bg-secondary absolute -top-2 -right-2 size-3 rounded-full px-1 font-mono " />
-                            : cartItemCount() > 0 && (
+                            : cartItemCount > 0 && (
                                 <Badge variant={'secondary'} className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
-                                    {cartItemCount()}
+                                    {cartItemCount}
                                 </Badge>
                             )
                     }
@@ -192,7 +194,7 @@ export function Cart() {
                         <div className="flex items-center justify-between">
                             <span className="text-sm font-medium">Subtotal</span>
                             <span className="text-sm font-semibold tabular-nums text-primary">
-                                {formatCurrency(subtotal())}
+                                {formatCurrency(subtotal)}
                             </span>
                         </div>
 

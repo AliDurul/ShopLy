@@ -1,5 +1,4 @@
-'use client';
-import React from 'react';
+
 import ProductCard from '@/components/ProductCard';
 
 interface RelatedProductsProps {
@@ -65,22 +64,15 @@ const mockRelatedProducts = [
     },
 ];
 
-export default function RelatedProducts({ category, excludeId }: RelatedProductsProps) {
+export default async function RelatedProducts({ category, excludeId }: RelatedProductsProps) {
+    await new Promise((resolve) => setTimeout(resolve, 4000));
     const related = mockRelatedProducts.filter((p) => p.id !== excludeId);
 
     return (
-        <div className="space-y-6">
-            <div>
-                <h2 className="text-2xl font-bold mb-2">Related Products</h2>
-                <p className="text-muted-foreground">You might also like these items</p>
-            </div>
-
-            {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {related.map((product) => (
-                    <ProductCard key={product.id} product={product} />
-                ))}
-            </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {related.map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))}
         </div>
     );
 }

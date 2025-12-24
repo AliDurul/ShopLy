@@ -1,25 +1,10 @@
-'use client'
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-import Image from "next/image"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel"
-import { Badge } from "./ui/badge"
-import { Button } from "./ui/button"
-import { LuHeart, LuExpand } from "react-icons/lu";
-import { useCartActions } from "@/store/cartStore"
 import ProductCard from "./ProductCard"
 
 
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function ProdCarauselList({products}: {products: any[]}) {
-    const { addItem } = useCartActions();
     return (
         <Carousel
             className="w-full min-w-0 "

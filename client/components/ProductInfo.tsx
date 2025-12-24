@@ -6,6 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import { Heart, Share2, Truck, Shield, RotateCw } from 'lucide-react';
 import { useCartActions } from '@/store/cartStore';
 import { useUrlParams } from '@/hooks/useUrlParams';
+import { Label } from './ui/label';
 
 interface ProductInfoProps {
     product: any;
@@ -57,7 +58,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
     };
 
     return (
-        <div className="space-y-6">
+        <div className="space-y-5">
             {/* Brand & Title */}
             <div>
                 <p className="text-sm text-muted-foreground mb-2">{product.brand}</p>
@@ -104,8 +105,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             <Separator />
 
             {/* Size Selector */}
-            <div className="space-y-3">
-                <label className="font-semibold text-sm">Size: <span className="text-primary">{selectedSize}</span></label>
+            <div className='space-y-2'>
+                <Label>Size: <span className="text-primary">{selectedSize}</span></Label>
                 <div className="flex flex-wrap gap-2">
                     {sizes.map((size) => (
                         <Button
@@ -125,8 +126,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             </div>
 
             {/* Color Selector */}
-            <div className="space-y-3">
-                <label className="font-semibold text-sm">Color: <span className="text-primary">{selectedColor}</span></label>
+            <div className='space-y-2'>
+                <Label >Color: <span className="text-primary">{selectedColor}</span></Label>
                 <div className="flex flex-wrap gap-2">
                     {colors.map((color) => (
                         <Button

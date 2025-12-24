@@ -10,7 +10,7 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
     const [activeTab, setActiveTab] = useState('description');
 
     return (
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="max-w-6xl mx-auto my-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="max-w-6xl mx-auto my-10">
             <TabsList className="grid w-full grid-cols-3 mb-8">
                 <TabsTrigger value="description">Description</TabsTrigger>
                 <TabsTrigger value="specifications">Specifications</TabsTrigger>
