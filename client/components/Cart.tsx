@@ -124,7 +124,7 @@ export function Cart() {
                                             </div>
                                             <div className="flex items-center gap-3 flex-wrap">
                                                 {/* Size selector */}
-                                                {/* {item.availableSizes && item.availableSizes.length > 0 && (
+                                                {item.availableSizes && item.availableSizes.length > 0 && (
                                                     <div className="flex items-center gap-1">
                                                         {item.availableSizes.map(sz => (
                                                             <Button
@@ -139,9 +139,9 @@ export function Cart() {
                                                             </Button>
                                                         ))}
                                                     </div>
-                                                )} */}
+                                                )}
                                                 {/* Color selector */}
-                                                {/* {item.availableColors && item.availableColors.length > 0 && (
+                                                {item.availableColors && item.availableColors.length > 0 && (
                                                     <div className="flex items-center gap-1">
                                                         {item.availableColors.map(col => (
                                                             <button
@@ -155,7 +155,7 @@ export function Cart() {
                                                             </button>
                                                         ))}
                                                     </div>
-                                                )} */}
+                                                )}
                                                 {/* Quantity */}
                                                 <div className="flex items-center gap-1">
                                                     <Button

@@ -9,6 +9,8 @@ import { useUrlParams } from '@/hooks/useUrlParams';
 import { Label } from './ui/label';
 import { useFavoriteActions, useIsFavorite } from '@/store/favoriteStore';
 import { NavigationContent, useNavigation } from '@/context/NavigationContext';
+import AddCartBtn from './AddCartBtn';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 
 interface ProductInfoProps {
     product: IProduct;
@@ -16,15 +18,12 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ product }: ProductInfoProps) {
     // Hooks
-    const { addCart, updateCart, removeCart } = useCartActions();
     const { toggleFavorite } = useFavoriteActions();
     const { getParam, updateUrlParams } = useUrlParams();
     const { startTransition } = useNavigation();
-    const cartP = useCartProduct(product.id);
     const isFavorited = useIsFavorite(product.id);
 
     // variables & states
-    const isInCart = !!cartP
     const discountPercent = Math.round(((product.price - (product?.discountPrice ?? product.price)) / product.price) * 100);
 
     // Get values from URL - shallow updates are instant, no loading
@@ -33,8 +32,6 @@ export default function ProductInfo({ product }: ProductInfoProps) {
     const [optimisticColor, setOptimisticColor] = useOptimistic(selectedColor)
 
     const [quantity, setQuantity] = useState(1);
-
-
 
     const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
     const colors = ['Black', 'White', 'Blue', 'Gray', 'Red', 'Navy'];
@@ -62,8 +59,8 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             <NavigationContent className='space-y-5'>
 
                 <div>
-                    <p className="text-sm text-muted-foreground mb-2">{product.brand}</p>
                     <h1 className="text-3xl lg:text-4xl font-bold">{product.name}</h1>
+                    <p className="text-sm text-muted-foreground mb-2">{product.brand}</p>
                 </div>
 
                 {/* Rating & Reviews */}
@@ -112,7 +109,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                 </div>
             </NavigationContent>
 
-            <Separator />
+            <Separator className='mt-5 md:mt-0'/>
 
             {/* Size Selector */}
             <div className='space-y-2'>
@@ -194,79 +191,47 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
             {/* Action Buttons */}
             <div className="flex gap-3">
-                {isInCart ? (
-                    <Button
-                        size='lg'
-                        variant={'ghost'}
-                        className="flex-1 hover:bg-primary/60 shadow-md shadow-primary/10 flex p-0 overflow-hidden transition-all duration-300">
-                        <div
-                            className="rounded-r-xl p-2 px-3  bg-primary/60 hover:bg-primary/80 h-full justify-center items-center flex cursor-pointer text-white"
-                            onClick={() => {
-                                if (cartP!.quantity === 1) {
-                                    removeCart(product.id);
-                                    return
-                                } else {
-                                    updateCart(product.id, cartP!.quantity - 1);
-                                }
-                            }}
-                            aria-label="Decrease quantity"
+
+                <AddCartBtn product={product} variant={'default'} size={'lg'} />
+
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            className="px-6"
+                            onClick={() => toggleFavorite(product)}
                         >
-                            <svg viewBox="0 0 24 24" className="size-4">
-                                <path fill="currentColor" d="M19 12.998H5v-2h14z" />
-                            </svg>
-                        </div>
+                            <Heart className={`size-5 ${isFavorited ? 'fill-red-500 text-red-500' : ''}`} />
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>{isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}</p>
+                    </TooltipContent>
+                </Tooltip>
 
-                        <span className="text-lg font-semibold tabular-nums min-w-8 text-center flex-1">
-                            {cartP!.quantity}
-                        </span>
-
-                        <div
-                            className="rounded-l-xl px-3 bg-secondary/60 hover:bg-secondary/80 h-full justify-center items-center flex p-2 cursor-pointer text-white"
-                            onClick={() => updateCart(product.id, cartP!.quantity + 1)}
-                            aria-label="Increase quantity"
+                <Tooltip>
+                    <TooltipTrigger asChild>
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            className="px-6"
+                            onClick={handleShare}
                         >
-                            <svg viewBox="0 0 24 24" className="size-4">
-                                <path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z" />
-                            </svg>
-                        </div>
+                            <Share2 className="size-5" />
+                        </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                        <p>Share</p>
+                    </TooltipContent>
+                </Tooltip>
 
-                    </Button>
-                ) : (
-                    <Button
-                        className="flex-1 p-5 transition-all duration-700"
-                        onClick={() => addCart(product)}
-                    >
-                        <span className="inline-flex items-center gap-2">
-                            <svg viewBox="0 0 24 24" className="size-4"><path fill="currentColor" d="M7 22q-.825 0-1.413-.587T5 20q0-.825.588-1.413T7 18q.825 0 1.413.588T9 20q0 .825-.587 1.413T7 22Zm10 0q-.825 0-1.413-.587T15 20q0-.825.588-1.413T17 18q.825 0 1.413.588T19 20q0 .825-.587 1.413T17 22ZM6.15 6l3.05 6h7.1l2.75-6H6.15Zm-1.6-2h15.5q.6 0 .912.488t.063.987l-3.85 8.4q-.25.55-.75.888T15.85 15H8.3l-1.1 2h11.8v2H7.1q-.725 0-1.113-.612T5.7 17.8l1.6-2.9L3 4H1V2h3q.375 0 .7.2t.45.55L6.5 6Z" /></svg>
-                            ADD TO CART
-                        </span>
-                    </Button>
-                )}
-                <Button
-                    variant="outline"
-                    size="lg"
-                    className="px-6"
-                    onClick={() => toggleFavorite(product)}
-                >
-                    <Heart
-                        className={`size-5 ${isFavorited ? 'fill-red-500 text-red-500' : ''}`}
-                    />
-                    {/* ${isFavorited ? 'text-red-600 border-red-300 hover:bg-red-50' : ''} */}
-                </Button>
-                <Button
-                    variant="outline"
-                    size="lg"
-                    className="px-6"
-                    onClick={handleShare}
-                >
-                    <Share2 className="size-5" />
-                </Button>
             </div>
 
             <Separator />
 
             {/* Shipping & Returns Info */}
-            <div className="flex justify-evenly flex-wrap bg-gray-50 p-4 rounded-lg">
+            <div className="flex justify-evenly flex-wrap bg-gray-50 p-4 rounded-lg gap-5">
                 <div className="flex gap-3">
                     <Truck className="size-5 text-primary shrink-0 mt-1" />
                     <div>
