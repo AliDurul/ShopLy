@@ -5,17 +5,7 @@ export default function ProductsGrid({ productsPromise }: {
     productsPromise: Promise<{
         message: string;
         success: boolean;
-        data: {
-            id: number;
-            name: string;
-            brand: string;
-            price: number;
-            discountPrice: number;
-            ratings: number;
-            images: string[];
-            category: string;
-            freeShipping: boolean;
-        }[];
+        data: IProduct[];
     } | {
         success: boolean;
         error: string;

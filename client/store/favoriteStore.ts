@@ -1,27 +1,17 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware'
 
-export interface FavoriteItem {
-    id: number;
-    name: string;
-    price: number;
-    discountPrice?: number;
-    image: string;
-    category?: string;
-    brand?: string;
-}
-
 interface Actions {
-    addFavorite: (item: FavoriteItem) => void;
+    addFavorite: (item: IProduct) => void;
     removeFavorite: (productId: number) => void;
-    toggleFavorite: (item: FavoriteItem) => void;
-    isFavorite: (productId: number) => boolean;
+    toggleFavorite: (item: IProduct) => void;
+    // isFavorite: (productId: number) => boolean;
     clearFavorites: () => void;
     setHydrating: (v: boolean) => void;
 }
 
 interface State {
-    favoriteItems: FavoriteItem[];
+    favoriteItems: IProduct[];
     isHydrating: boolean;
     actions: Actions;
 }
@@ -54,9 +44,6 @@ const useFavoriteStore = create<State>()(
                         get().actions.addFavorite(item);
                     }
                 },
-                isFavorite: (productId) => {
-                    return get().favoriteItems.some(item => item.id === productId);
-                },
                 clearFavorites: () => {
                     set({ favoriteItems: [] });
                 }
@@ -86,3 +73,4 @@ export const useFavoriteActions = () => useFavoriteStore((state) => state.action
 
 // Reactive computed selector
 export const useFavoriteCount = () => useFavoriteStore((state) => state.favoriteItems.length);
+export const useIsFavorite = (productId: number) => useFavoriteStore((state) => state.favoriteItems.some(item => item.id === productId));

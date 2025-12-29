@@ -20,7 +20,7 @@ import { useCartActions, useCartHydrating, useCartItems, useCartItemCount, useCa
 import { Skeleton } from "./ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { X, Minus, Plus, Trash2 } from "lucide-react";
+import { Minus, Plus, Trash2 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 
 
@@ -28,7 +28,7 @@ export function Cart() {
 
     const items = useCartItems();
     const isHydrating = useCartHydrating();
-    const { updateItem, removeItem } = useCartActions();
+    const { updateCart, removeCart } = useCartActions();
     const cartItemCount = useCartItemCount();
     const subtotal = useCartSubtotal();
 
@@ -38,7 +38,7 @@ export function Cart() {
                 <div className='relative  '>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <FiShoppingCart size={22} className="text-gray-700 hover:text-red-500 transition-colors cursor-pointer" />
+                            <FiShoppingCart size={22} className="text-gray-700 hover:text-secondary transition-colors cursor-pointer" />
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>Shopping Cart</p>
@@ -88,9 +88,9 @@ export function Cart() {
                                 {items.map(item => (
                                     <div key={item.id} className="group border rounded-lg p-3 flex gap-4 items-start">
                                         <div className="relative size-20 h-24  shrink-0 rounded-md overflow-hidden bg-muted">
-                                            {item.image ? (
+                                            {item.images ? (
                                                 <Image
-                                                    src={item.image}
+                                                    src={item.images[0]}
                                                     alt={item.name}
                                                     fill
                                                     className="object-cover object-top" />
@@ -106,7 +106,7 @@ export function Cart() {
                                                         <p className="text-xs text-muted-foreground truncate">{item.category}</p>
                                                     )}
                                                 </div>
-                                                <Button variant="ghost" size="icon" className="size-7 hover:text-primary" onClick={() => removeItem(item.id)} aria-label="Remove item">
+                                                <Button variant="ghost" size="icon" className="size-7 hover:text-primary" onClick={() => removeCart(item.id)} aria-label="Remove item">
                                                     <Trash2 className="size-4 " />
                                                 </Button>
                                             </div>
@@ -162,7 +162,7 @@ export function Cart() {
                                                         variant="outline"
                                                         size="icon"
                                                         className="size-6"
-                                                        onClick={() => updateItem(item.id, Math.max(1, item.quantity - 1))}
+                                                        onClick={() => updateCart(item.id, Math.max(1, item.quantity - 1))}
                                                         aria-label="Decrease quantity"
                                                     >
                                                         <Minus className="size-3" />
@@ -172,7 +172,7 @@ export function Cart() {
                                                         variant="outline"
                                                         size="icon"
                                                         className="size-6"
-                                                        onClick={() => updateItem(item.id, item.quantity + 1)}
+                                                        onClick={() => updateCart(item.id, item.quantity + 1)}
                                                         aria-label="Increase quantity"
                                                     >
                                                         <Plus className="size-3" />

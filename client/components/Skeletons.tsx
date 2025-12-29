@@ -31,3 +31,4 @@ export function ProductSkeletonGrid({ length = 12 }: { length?: number }) {
         </div>
     )
 }
+

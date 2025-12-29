@@ -3,23 +3,296 @@ import qs from 'query-string';
 
 const BASE_URL = 'localhost' + '/';
 
-interface GetAllDataParams extends QueryParams { url: string; }
 
-const dummyProducts = Array.from({ length: 50 }, (_, i) => ({
-    id: i + 1,
-    name: `Premium Product ${i + 1}`,
-    slug: `premium-product-${i + 1}`,
-    brand: ['Nike', 'Adidas', 'Zara', 'H&M', 'Samsung', 'Apple'][i % 6],
-    price: 99.99 + (i * 10),
-    discountPrice: 69.99 + (i * 7),
-    ratings: Math.floor(Math.random() * 2) + 4,
-    images: [
-        'https://picsum.photos/seed/' + (i * 10) + '/480/224',
-        'https://picsum.photos/seed/' + (i * 10 + 1) + '/480/224'
-    ],
-    category: ['Men\'s Fashion', 'Women\'s Fashion', 'Electronics', 'Sports & Outdoors'][i % 4],
-    freeShipping: i % 3 === 0
-}))
+const dummyProducts: IProduct[] = [
+    {
+        id: 1,
+        name: "Classic Cotton T-Shirt",
+        slug: "classic-cotton-tshirt",
+        price: 29.99,
+        isDiscounted: true,
+        discountPrice: 19.99,
+        images: [
+            "https://picsum.photos/seed/10/500",
+            "https://picsum.photos/seed/11/500",
+            "https://picsum.photos/seed/12/500"
+        ],
+        quantity: 150,
+        ratings: 4.5,
+        category: "men",
+        size: "M",
+        color: "Navy Blue",
+        brand: "Nike",
+        description: "Premium cotton t-shirt with a comfortable fit. Perfect for everyday wear with breathable fabric and modern design.",
+        specifications: {
+            "Material": "100% Cotton",
+            "Fit": "Regular",
+            "Care": "Machine washable",
+            "Weight": "180 GSM",
+            "Origin": "Made in USA"
+        },
+        availableSizes: ["XS", "S", "M", "L", "XL", "XXL"],
+        availableColors: ["Navy Blue", "Black", "White", "Gray", "Red"]
+    },
+    {
+        id: 2,
+        name: "Slim Fit Denim Jeans",
+        slug: "slim-fit-denim-jeans",
+        price: 79.99,
+        isDiscounted: true,
+        discountPrice: 59.99,
+        images: [
+            "https://picsum.photos/seed/20/500",
+            "https://picsum.photos/seed/21/500",
+            "https://picsum.photos/seed/22/500"
+        ],
+        quantity: 85,
+        ratings: 4.7,
+        category: "men",
+        size: "32",
+        color: "Dark Blue",
+        brand: "Levi's",
+        description: "Classic slim fit jeans with stretch denim for ultimate comfort. Features five-pocket styling and button fly.",
+        specifications: {
+            "Material": "98% Cotton, 2% Elastane",
+            "Fit": "Slim",
+            "Rise": "Mid Rise",
+            "Care": "Machine washable cold",
+            "Origin": "Made in Bangladesh"
+        },
+        availableSizes: ["28", "30", "32", "34", "36", "38"],
+        availableColors: ["Dark Blue", "Light Blue", "Black", "Gray"]
+    },
+    {
+        id: 3,
+        name: "Women's Summer Dress",
+        slug: "womens-summer-dress",
+        price: 89.99,
+        isDiscounted: true,
+        discountPrice: 69.99,
+        images: [
+            "https://picsum.photos/seed/30/500",
+            "https://picsum.photos/seed/31/500",
+            "https://picsum.photos/seed/32/500"
+        ],
+        quantity: 60,
+        ratings: 4.8,
+        category: "women",
+        size: "M",
+        color: "Floral Pink",
+        brand: "Zara",
+        description: "Elegant summer dress with floral pattern. Lightweight and breathable fabric perfect for warm weather occasions.",
+        specifications: {
+            "Material": "100% Polyester",
+            "Fit": "Regular",
+            "Length": "Midi",
+            "Care": "Hand wash recommended",
+            "Origin": "Made in India"
+        },
+        availableSizes: ["XS", "S", "M", "L", "XL"],
+        availableColors: ["Floral Pink", "Floral Blue", "Solid White", "Solid Black"]
+    },
+    {
+        id: 4,
+        name: "Leather Crossbody Bag",
+        slug: "leather-crossbody-bag",
+        price: 149.99,
+        isDiscounted: false,
+        images: [
+            "https://picsum.photos/seed/40/500",
+            "https://picsum.photos/seed/41/500",
+            "https://picsum.photos/seed/42/500"
+        ],
+        quantity: 35,
+        ratings: 4.6,
+        category: "women",
+        size: "One Size",
+        color: "Brown",
+        brand: "Michael Kors",
+        description: "Premium leather crossbody bag with adjustable strap. Multiple compartments for organized storage.",
+        specifications: {
+            "Material": "Genuine Leather",
+            "Dimensions": "9\" x 7\" x 3\"",
+            "Strap": "Adjustable, 45\" max",
+            "Care": "Wipe with dry cloth",
+            "Origin": "Made in Italy"
+        },
+        availableSizes: ["One Size"],
+        availableColors: ["Brown", "Black", "Tan", "Burgundy"]
+    },
+    {
+        id: 5,
+        name: "Kids Graphic Hoodie",
+        slug: "kids-graphic-hoodie",
+        price: 39.99,
+        isDiscounted: true,
+        discountPrice: 29.99,
+        images: [
+            "https://picsum.photos/seed/10/500",
+            "https://picsum.photos/seed/11/500",
+            "https://picsum.photos/seed/12/500"
+        ],
+        quantity: 120,
+        ratings: 4.4,
+        category: "kids",
+        size: "8-10Y",
+        color: "Red",
+        brand: "Gap Kids",
+        description: "Comfortable hoodie with fun graphic print. Soft fleece lining keeps kids warm and cozy.",
+        specifications: {
+            "Material": "80% Cotton, 20% Polyester",
+            "Fit": "Regular",
+            "Features": "Kangaroo pocket, drawstring hood",
+            "Care": "Machine washable",
+            "Origin": "Made in Vietnam"
+        },
+        availableSizes: ["4-6Y", "6-8Y", "8-10Y", "10-12Y", "12-14Y"],
+        availableColors: ["Red", "Blue", "Gray", "Black", "Green"]
+    },
+    {
+        id: 6,
+        name: "Wireless Bluetooth Headphones",
+        slug: "wireless-bluetooth-headphones",
+        price: 199.99,
+        isDiscounted: true,
+        discountPrice: 149.99,
+        images: [
+            "https://picsum.photos/seed/60/500",
+            "https://picsum.photos/seed/61/500",
+            "https://picsum.photos/seed/62/500"
+        ],
+        quantity: 45,
+        ratings: 4.9,
+        category: "electronics",
+        size: "One Size",
+        color: "Black",
+        brand: "Sony",
+        description: "Premium wireless headphones with active noise cancellation. 30-hour battery life and superior sound quality.",
+        specifications: {
+            "Connectivity": "Bluetooth 5.0",
+            "Battery": "30 hours playback",
+            "Charging": "USB-C fast charge",
+            "Features": "ANC, Voice Assistant",
+            "Warranty": "2 years"
+        },
+        availableSizes: ["One Size"],
+        availableColors: ["Black", "Silver", "White", "Blue"]
+    },
+    {
+        id: 7,
+        name: "Smart Fitness Watch",
+        slug: "smart-fitness-watch",
+        price: 299.99,
+        isDiscounted: false,
+        images: [
+            "https://picsum.photos/seed/50/500",
+            "https://picsum.photos/seed/51/500",
+            "https://picsum.photos/seed/52/500"
+        ],
+        quantity: 30,
+        ratings: 4.7,
+        category: "electronics",
+        size: "42mm",
+        color: "Space Gray",
+        brand: "Apple",
+        description: "Advanced fitness tracking with heart rate monitor, GPS, and sleep analysis. Water resistant up to 50m.",
+        specifications: {
+            "Display": "AMOLED Retina",
+            "Battery": "18 hours",
+            "Sensors": "Heart rate, GPS, Gyroscope",
+            "Compatibility": "iOS 14+",
+            "Warranty": "1 year"
+        },
+        availableSizes: ["38mm", "42mm", "44mm"],
+        availableColors: ["Space Gray", "Silver", "Gold", "Rose Gold"]
+    },
+    {
+        id: 8,
+        slug: "modern-floor-lamp",
+        name: "Modern Floor Lamp",
+        price: 129.99,
+        isDiscounted: true,
+        discountPrice: 99.99,
+        images: [
+            "https://picsum.photos/seed/70/500",
+            "https://picsum.photos/seed/71/500",
+            "https://picsum.photos/seed/72/500"
+        ],
+        quantity: 25,
+        ratings: 4.5,
+        category: "home",
+        size: "60\" Height",
+        color: "Brushed Nickel",
+        brand: "West Elm",
+        description: "Contemporary floor lamp with adjustable head. Energy-efficient LED bulb included for bright, warm lighting.",
+        specifications: {
+            "Height": "60 inches",
+            "Base": "10\" diameter weighted",
+            "Bulb": "LED 15W included",
+            "Switch": "Foot pedal on/off",
+            "Assembly": "Minimal required"
+        },
+        availableSizes: ["60\" Height"],
+        availableColors: ["Brushed Nickel", "Matte Black", "Brass", "White"]
+    },
+    {
+        id: 9,
+        slug: "ceramic-coffee-mug-set",
+        name: "Ceramic Coffee Mug Set",
+        price: 34.99,
+        isDiscounted: false,
+        images: [
+            "https://picsum.photos/seed/80/500",
+            "https://picsum.photos/seed/81/500",
+            "https://picsum.photos/seed/82/500"
+        ],
+        quantity: 80,
+        ratings: 4.3,
+        category: "home",
+        size: "12 oz",
+        color: "White",
+        brand: "Crate & Barrel",
+        description: "Set of 4 elegant ceramic mugs. Microwave and dishwasher safe with comfortable handles.",
+        specifications: {
+            "Capacity": "12 oz each",
+            "Material": "High-fired ceramic",
+            "Care": "Dishwasher & microwave safe",
+            "Set": "4 mugs included",
+            "Origin": "Made in Portugal"
+        },
+        availableSizes: ["12 oz"],
+        availableColors: ["White", "Gray", "Navy", "Mint Green"]
+    },
+    {
+        id: 10,
+        name: "Running Shoes - Trail Edition",
+        slug: "running-shoes-trail-edition",
+        price: 119.99,
+        isDiscounted: true,
+        discountPrice: 89.99,
+        images: [
+            "https://picsum.photos/seed/90/500",
+            "https://picsum.photos/seed/91/500",
+            "https://picsum.photos/seed/92/500"
+        ],
+        quantity: 65,
+        ratings: 4.8,
+        category: "sports",
+        size: "US 10",
+        color: "Neon Orange",
+        brand: "Adidas",
+        description: "High-performance trail running shoes with superior grip and cushioning. Waterproof and breathable mesh upper.",
+        specifications: {
+            "Upper": "Waterproof mesh",
+            "Sole": "Continental rubber grip",
+            "Drop": "8mm heel-to-toe",
+            "Weight": "10.5 oz (size 9)",
+            "Activity": "Trail running, hiking"
+        },
+        availableSizes: ["US 7", "US 8", "US 9", "US 10", "US 11", "US 12"],
+        availableColors: ["Neon Orange", "Black/Red", "Blue/Gray", "Green/Yellow"]
+    }
+];
 
 export const getData = async (url: string) => {
     await wait(6000);
@@ -40,11 +313,13 @@ export const getData = async (url: string) => {
 
         return { success: true, message: "Data fetched successfully", data: dummyProducts.find((p) => p.slug === url) };
 
-    } catch (error: any) {
-        return { success: false, message: error.message || "Something went wrong, Please try again!" };
+    } catch (error: unknown) {
+        if (error instanceof Error)
+            return { success: false, message: error.message || "Something went wrong, Please try again!" };
     }
 };
 
+interface GetAllDataParams extends QueryParams { url: string; }
 export const getAllData = async ({ url, searchQueries, filterQueries, sortQueries, customQuery }: GetAllDataParams) => {
 
     if (!url) return { success: false, error: 'URL parameter is required' };

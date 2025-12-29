@@ -7,8 +7,8 @@ export const useUrlParams = () => {
     const searchParams = useSearchParams();
     const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const updateUrlParams = useCallback((updates: Record<string, string | null>, options: { debounce?: number; replace?: boolean } = {}) => {
-        const { debounce = 0, replace = false } = options;
+    const updateUrlParams = useCallback((updates: Record<string, string | null>, options: { debounce?: number; replace?: boolean; shallow?: boolean } = {}) => {
+        const { debounce = 0, replace = false, shallow = false } = options;
 
         const performUpdate = () => {
             try {
@@ -23,6 +23,12 @@ export const useUrlParams = () => {
                 });
 
                 const newUrl = `${window.location.pathname}?${urlParams.toString()}`;
+
+                // Shallow update - only update URL, no navigation/refetch
+                if (shallow) {
+                    window.history.replaceState(null, '', newUrl);
+                    return;
+                }
 
                 if (replace) {
                     router.replace(newUrl, { scroll: false });

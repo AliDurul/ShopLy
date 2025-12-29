@@ -1,15 +1,16 @@
 
+import { getAllData } from '@/actions/actionUtils';
 import ProductCard from '@/components/ProductCard';
 
 interface RelatedProductsProps {
     category: string;
-    excludeId: string;
+    excludeId: number;
 }
 
 // Mock related products - in real app, fetch based on category
 const mockRelatedProducts = [
     {
-        id: '1',
+        id: 1,
         name: 'Classic Crew Neck T-Shirt',
         brand: 'Nike',
         price: 45.99,
@@ -18,7 +19,7 @@ const mockRelatedProducts = [
         ratings: 4,
     },
     {
-        id: '2',
+        id: 2,
         name: 'Premium Cotton Polo',
         brand: 'Ralph Lauren',
         price: 65.99,
@@ -27,7 +28,7 @@ const mockRelatedProducts = [
         ratings: 5,
     },
     {
-        id: '3',
+        id: 3,
         name: 'Urban Casual Tee',
         brand: 'Adidas',
         price: 38.99,
@@ -36,7 +37,7 @@ const mockRelatedProducts = [
         ratings: 4,
     },
     {
-        id: '4',
+        id: 4,
         name: 'Slim Fit T-Shirt',
         brand: 'Tommy Hilfiger',
         price: 55.99,
@@ -45,7 +46,7 @@ const mockRelatedProducts = [
         ratings: 5,
     },
     {
-        id: '5',
+        id: 5,
         name: 'Comfort Fit Casual Tee',
         brand: 'Gap',
         price: 32.99,
@@ -54,7 +55,7 @@ const mockRelatedProducts = [
         ratings: 3,
     },
     {
-        id: '6',
+        id: 6,
         name: 'Designer Graphic Tee',
         brand: 'Calvin Klein',
         price: 48.99,
@@ -64,9 +65,16 @@ const mockRelatedProducts = [
     },
 ];
 
-export default async function RelatedProducts({ category, excludeId }: RelatedProductsProps) {
+export default async function RelatedProducts({ excludeId }: RelatedProductsProps) {
     await new Promise((resolve) => setTimeout(resolve, 4000));
-    const related = mockRelatedProducts.filter((p) => p.id !== excludeId);
+
+    const res = await getAllData({ url: 'products-related/' + excludeId });
+
+    if (!('data' in res) || !res.success || res.data.length === 0) {
+        return <div className="text-red-500">Failed to load related products.</div>;
+    }
+
+    const related = res.data;
 
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

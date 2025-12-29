@@ -31,7 +31,7 @@ export function Favorite() {
     const isHydrating = useFavoriteHydrating();
     const { removeFavorite, clearFavorites } = useFavoriteActions();
     const favoriteCount = useFavoriteCount();
-    const { addItem } = useCartActions();
+    const { addCart } = useCartActions();
 
     return (
         <Sheet>
@@ -137,7 +137,7 @@ export function Favorite() {
                                                 variant="outline"
                                                 size="sm"
                                                 className="w-full mt-2 hover:bg-primary hover:text-white"
-                                                onClick={() => addItem(item)}
+                                                onClick={() => addCart(item)}
                                             >
                                                 <ShoppingCart className="size-4 mr-2" />
                                                 Add to Cart

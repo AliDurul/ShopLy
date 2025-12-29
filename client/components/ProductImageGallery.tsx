@@ -41,7 +41,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                     {images.map((image, index) => (
                         <button
                             key={index}
-                            onClick={() => setMainImageIndex(index)}
+                            onClick={(e) => { e.stopPropagation(); setMainImageIndex(index); }}
                             className={cn(
                                 'relative shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all',
                                 mainImageIndex === index
@@ -104,7 +104,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                             variant="ghost"
                             size="icon"
                             className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white transition-all"
-                            onClick={handlePrevImage}
+                            onClick={(e)=>{handlePrevImage(); e.stopPropagation();}}
                         >
                             <ChevronLeft className="size-5" />
                         </Button>
@@ -112,7 +112,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                             variant="ghost"
                             size="icon"
                             className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white transition-all"
-                            onClick={handleNextImage}
+                            onClick={(e)=>{handleNextImage(); e.stopPropagation();}}
                         >
                             <ChevronRight className="size-5" />
                         </Button>

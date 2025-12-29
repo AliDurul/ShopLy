@@ -82,7 +82,7 @@ export default async function ProductsPage({ searchParams }: IPageSearchParams) 
     <main className="max-w-700 mx-auto p-5">
       <div className="flex flex-col lg:flex-row gap-3">
         {/* Left Sidebar - Filters */}
-        <Suspense>
+        <Suspense >
           <FilterSidebar />
         </Suspense>
 
@@ -98,7 +98,7 @@ export default async function ProductsPage({ searchParams }: IPageSearchParams) 
               </p>
             </div>
 
-            <Suspense>
+            <Suspense >
               <SortBtn />
             </Suspense>
           </div>
