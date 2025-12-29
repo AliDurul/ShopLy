@@ -6,10 +6,8 @@ import { Suspense } from "react";
 import SortBtn from "@/components/SortBtn";
 import { PaginationBtn } from "@/components/PaginationBtn";
 
-
-
-export default async function ProductsPage({ searchParams }: IPageSearchParams) {
-
+// Async component that handles searchParams - wrapped in Suspense
+async function ProductsContent({ searchParams }: IPageSearchParams) {
   const params = await searchParams;
   const query = params.q || '';
   const page = params.p || '1';
@@ -79,36 +77,48 @@ export default async function ProductsPage({ searchParams }: IPageSearchParams) 
     .join('&');
 
   return (
+    <>
+      {/* Header */}
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold">Products</h1>
+          <p className="text-muted-foreground text-sm mt-1">
+            {/* {products.length} {products.length === 1 ? 'product' : 'products'} found */}
+            x products found
+          </p>
+        </div>
+
+        <Suspense>
+          <SortBtn />
+        </Suspense>
+      </div>
+
+      <Suspense key={queryKey} fallback={<ProductSkeletonGrid />}>
+        <ProductsGrid productsPromise={productsPromise} />
+      </Suspense>
+    </>
+  );
+}
+
+export default function ProductsPage({ searchParams }: IPageSearchParams) {
+  return (
     <main className="max-w-700 mx-auto p-5">
       <div className="flex flex-col lg:flex-row gap-3">
         {/* Left Sidebar - Filters */}
-        <Suspense >
+        <Suspense>
           <FilterSidebar />
         </Suspense>
 
         {/* Right Side - Product Grid */}
         <div className="flex-1">
-          {/* Header */}
-          <div className="mb-6 flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold">Products</h1>
-              <p className="text-muted-foreground text-sm mt-1">
-                {/* {products.length} {products.length === 1 ? 'product' : 'products'} found */}
-                x products found
-              </p>
-            </div>
-
-            <Suspense >
-              <SortBtn />
-            </Suspense>
-          </div>
-
-          <Suspense key={queryKey} fallback={<ProductSkeletonGrid />}>
-            <ProductsGrid productsPromise={productsPromise} />
+          <Suspense fallback={<ProductSkeletonGrid />}>
+            <ProductsContent searchParams={searchParams} />
           </Suspense>
         </div>
       </div>
-      <PaginationBtn />
+      <Suspense>
+        <PaginationBtn />
+      </Suspense>
     </main>
-  )
+  );
 }
