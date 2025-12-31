@@ -7,14 +7,13 @@ import { Badge } from "./ui/badge";
 
 import { useFavoriteActions, useIsFavorite } from "@/store/favoriteStore";
 import AddCartBtn from "./AddCartBtn";
+import ProductVariantBtns from "./ProductVariantBtns";
 
 export default function ProductOverview({ product }: { product: IProduct }) {
 
     const { toggleFavorite } = useFavoriteActions();
-
-
-
     const isFavorited = useIsFavorite(product.id);
+
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -90,7 +89,9 @@ export default function ProductOverview({ product }: { product: IProduct }) {
 
                         <Separator />
 
-                        <div className="pt-2 space-y-3">
+                        <ProductVariantBtns product={product} shallow />
+
+                        <div className="pt-4 space-y-3">
                             <div className="flex items-center gap-3">
                                 <Button
                                     variant={'outline'}
@@ -106,48 +107,6 @@ export default function ProductOverview({ product }: { product: IProduct }) {
                                 </Button>
 
                                 <AddCartBtn product={product} />
-                                {/* <div className="flex items-center gap-2 ml-auto">
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        className="size-8"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            if (isInCart && cartP) {
-                                                if (cartP.quantity === 1) {
-                                                    removeCart(product.id);
-                                                } else {
-                                                    updateCart(product.id, cartP.quantity - 1);
-                                                }
-                                            }
-                                        }}
-                                        aria-label="Decrease quantity"
-                                        disabled={!isInCart}
-                                    >
-                                        <svg viewBox="0 0 24 24" className="size-4"><path fill="currentColor" d="M19 12.998H5v-2h14z" /></svg>
-                                    </Button>
-                                    <span className="min-w-8 text-center text-sm font-semibold tabular-nums">
-                                        {isInCart && cartP ? cartP.quantity : 0}
-                                    </span>
-                                    <Button
-                                        variant="outline"
-                                        size="icon"
-                                        className="size-8"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            if (isInCart && cartP) {
-                                                updateCart(product.id, cartP.quantity + 1);
-                                            } else {
-                                                addCart(product);
-                                            }
-                                        }}
-                                        aria-label="Increase quantity"
-                                    >
-                                        <svg viewBox="0 0 24 24" className="size-4"><path fill="currentColor" d="M19 12.998h-6v6h-2v-6H5v-2h6v-6h2v6h6z" /></svg>
-                                    </Button>
-                                </div>
-
-                                <span className="text-xs text-muted-foreground ml-2">Added: {isInCart && cartP ? cartP.quantity : 0}</span> */}
                             </div>
 
                         </div>

@@ -1,16 +1,12 @@
 'use client';
-import React, { useState, useOptimistic } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Heart, Share2, Truck, Shield, RotateCw } from 'lucide-react';
-import { useUrlParams } from '@/hooks/useUrlParams';
-import { Label } from './ui/label';
 import { useFavoriteActions, useIsFavorite } from '@/store/favoriteStore';
-import { NavigationContent, useNavigation } from '@/context/NavigationContext';
 import AddCartBtn from './AddCartBtn';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
-import { isNamedColor, mapColor } from '@/lib/utils';
+import ProductVariantBtns from './ProductVariantBtns';
 
 interface ProductInfoProps {
     product: IProduct;
@@ -19,17 +15,11 @@ interface ProductInfoProps {
 export default function ProductInfo({ product }: ProductInfoProps) {
     // Hooks
     const { toggleFavorite } = useFavoriteActions();
-    const { getParam, updateUrlParams } = useUrlParams();
-    const { startTransition } = useNavigation();
     const isFavorited = useIsFavorite(product.id);
 
     // variables & states
     const discountPercent = Math.round(((product.price - (product?.discountPrice ?? product.price)) / product.price) * 100);
 
-    // Get values from URL - shallow updates are instant, no loading
-    const selectedSize = getParam('size', product.size) as string;
-    const selectedColor = getParam('color', product.color) as string;
-    const [optimisticColor, setOptimisticColor] = useOptimistic(selectedColor);
 
 
     // functions
@@ -46,7 +36,7 @@ export default function ProductInfo({ product }: ProductInfoProps) {
             }
         }
     };
-    console.log(optimisticColor, product.color);
+
     return (
         <div className="space-y-5">
             {/* Brand & Title */}
@@ -104,60 +94,9 @@ export default function ProductInfo({ product }: ProductInfoProps) {
 
             <Separator className='mt-5' />
 
-            {/* Size Selector */}
-            <div className='space-y-2'>
-                <Label>Size: <span className="text-primary">{selectedSize}</span></Label>
-                {product.availableSizes && product.availableSizes.length > 0 && (
-                    <div className="flex items-center gap-1">
-                        {product.availableSizes.map(size => (
-                            <Button
-                                variant={'primary-outline'}
-                                size={'default'}
-                                key={size}
-                                onClick={() => updateUrlParams({ size }, { shallow: true })}
-                                className={` ${selectedSize === size
-                                    ? 'border-primary bg-primary text-white hover:bg-primary/90'
-                                    : 'border-gray-300 hover:border-primary hover:bg-transparent hover:text-primary text-foreground'
-                                    }`}
-                            >
-                                {size}
-                            </Button>
-                        ))}
-                    </div>
-                )}
-            </div>
+            <ProductVariantBtns product={product} />
 
-            {/* Color Selector */}
-            <NavigationContent className=''>
-
-                <div className='space-y-2'>
-                    <Label >Color: <span className="text-primary">{optimisticColor}</span></Label>
-                    <div className="flex flex-wrap gap-2">
-                        {product.availableColors && product.availableColors.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                {product.availableColors.map(color => (
-                                    <button
-                                        key={color}
-                                        onClick={() => {
-                                            startTransition(() => {
-                                                setOptimisticColor(color);
-                                                updateUrlParams({ color });
-                                            });
-                                        }}
-                                        aria-label={`Select color ${color}`}
-                                        className={`size-9 rounded-full border flex items-center justify-center text-[10px] font-medium transition ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary ${optimisticColor === color ? 'ring-2' : ''}`}
-                                        style={{ backgroundColor: mapColor(color) }}
-                                    >
-                                        {isNamedColor(mapColor(color)) ? '' : color[0]}
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </NavigationContent>
-
-            <Separator />
+            <Separator className='mt-5'/>
 
             {/* Action Buttons */}
             <div className="flex gap-3">

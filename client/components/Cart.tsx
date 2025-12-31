@@ -22,6 +22,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { formatCurrency, isNamedColor, mapColor } from "@/lib/utils";
+import Link from "next/link";
 
 
 export function Cart() {
@@ -64,7 +65,7 @@ export function Cart() {
                         <SheetTitle>Cart Summary</SheetTitle>
                         <SheetDescription>Your selected items & quantity goals.</SheetDescription>
                     </SheetHeader>
-                    <ScrollArea className="h-[calc(100vh-350px)] px-6 py-4 ">
+                    <ScrollArea className={`h-[calc(100vh-280px)] px-6 py-4`}>
                         {isHydrating && (
                             <div className="space-y-4">
                                 {Array.from({ length: 3 }).map((_, i) => (
@@ -80,7 +81,16 @@ export function Cart() {
                             </div>
                         )}
                         {!isHydrating && items.length === 0 && (
-                            <p className="text-sm text-muted-foreground">Your cart is empty.</p>
+                            <div className="flex flex-col items-center justify-center h-full py-12 text-center ">
+                                <FiShoppingCart size={64} className="text-muted-foreground/30 mb-4" />
+                                <h3 className="text-lg font-semibold mb-1">Your cart is empty</h3>
+                                <p className="text-sm text-muted-foreground mb-6">Looks like you haven&apos;t added anything yet.</p>
+                                <SheetClose asChild>
+                                    <Button asChild>
+                                        <Link href="/products">Shop Now</Link>
+                                    </Button>
+                                </SheetClose>
+                            </div>
                         )}
                         {!isHydrating && items.length > 0 && (
                             <div className="space-y-5">
@@ -185,32 +195,40 @@ export function Cart() {
                         )}
                     </ScrollArea>
                     <Separator />
-                    <div className="px-6 py-4 space-y-3">
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium">Items</span>
-                            <span className="text-sm font-semibold tabular-nums text-primary">{items.length}</span>
-                        </div>
-                        <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium">Subtotal</span>
-                            <span className="text-sm font-semibold tabular-nums text-primary">
-                                {formatCurrency(subtotal)}
-                            </span>
-                        </div>
+                    {
+                        !isHydrating && items.length > 0 && (
+                            <>
+                                <div className="px-6 py-4 space-y-3">
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium">Items</span>
+                                        <span className="text-sm font-semibold tabular-nums text-primary">{items.length}</span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm font-medium">Subtotal</span>
+                                        <span className="text-sm font-semibold tabular-nums text-primary">
+                                            {formatCurrency(subtotal)}
+                                        </span>
+                                    </div>
 
-                        <p className="text-xs text-muted-foreground">Taxes & shipping calculated at checkout.</p>
-                    </div>
-                    <SheetFooter className="p-4 border-t flex gap-4">
-                        <div className="flex gap-3 flex-wrap flex-1">
-                            <Button className="flex-1 uppercase">Checkout</Button>
-                            <Button variant={'secondary'} className="flex-1 uppercase">View Cart</Button>
-                        </div>
-                        <SheetClose asChild>
+                                    <p className="text-xs text-muted-foreground">Taxes & shipping calculated at checkout.</p>
+                                </div>
+                                <SheetFooter className="p-4 border-t flex gap-4">
+                                    <div className="flex gap-3 flex-wrap flex-1">
+                                        <Button className="flex-1 uppercase">Checkout</Button>
+                                        <Button variant={'secondary'} className="flex-1 uppercase">View Cart</Button>
+                                    </div>
+                                    {/* <SheetClose asChild>
                             <Button variant="outline" className="flex-1">Close</Button>
-                        </SheetClose>
-                    </SheetFooter>
+                        </SheetClose> */}
+                                </SheetFooter>
+                            </>
+                        )
+
+                    }
+
                 </div>
             </SheetContent>
-        </Sheet>
+        </Sheet >
     )
 }
 
