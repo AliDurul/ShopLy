@@ -37,7 +37,7 @@ export function NavigationContent({
     const { isPending } = useNavigation();
 
     return (
-        <div className={`contents ${isPending ? '*:opacity-60 *:pointer-events-none *:transition-opacity *:duration-200' : ''} ${className}`}>
+        <div className={`contents ${isPending ? '*:opacity-60 *:pointer-events-none *:transition-opacity *:duration-200 *:animate-pulse' : ''} ${className}`}>
             {children}
         </div>
     );

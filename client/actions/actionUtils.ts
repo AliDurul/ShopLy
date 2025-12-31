@@ -13,15 +13,15 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 19.99,
         images: [
-            "https://picsum.photos/seed/10/500",
-            "https://picsum.photos/seed/11/500",
-            "https://picsum.photos/seed/12/500"
+            "https://picsum.photos/seed/10/800",
+            "https://picsum.photos/seed/11/800",
+            "https://picsum.photos/seed/12/800"
         ],
         quantity: 150,
         ratings: 4.5,
         category: "men",
         size: "M",
-        color: "Navy Blue",
+        color: "Blue",
         brand: "Nike",
         description: "Premium cotton t-shirt with a comfortable fit. Perfect for everyday wear with breathable fabric and modern design.",
         specifications: {
@@ -32,7 +32,7 @@ const dummyProducts: IProduct[] = [
             "Origin": "Made in USA"
         },
         availableSizes: ["XS", "S", "M", "L", "XL", "XXL"],
-        availableColors: ["Navy Blue", "Black", "White", "Gray", "Red"]
+        availableColors: ["Blue", "Black", "White", "Gray", "Red"]
     },
     {
         id: 2,
@@ -42,15 +42,15 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 59.99,
         images: [
-            "https://picsum.photos/seed/20/500",
-            "https://picsum.photos/seed/21/500",
-            "https://picsum.photos/seed/22/500"
+            "https://picsum.photos/seed/20/800",
+            "https://picsum.photos/seed/21/800",
+            "https://picsum.photos/seed/22/800"
         ],
         quantity: 85,
         ratings: 4.7,
         category: "men",
         size: "32",
-        color: "Dark Blue",
+        color: "Blue",
         brand: "Levi's",
         description: "Classic slim fit jeans with stretch denim for ultimate comfort. Features five-pocket styling and button fly.",
         specifications: {
@@ -61,7 +61,7 @@ const dummyProducts: IProduct[] = [
             "Origin": "Made in Bangladesh"
         },
         availableSizes: ["28", "30", "32", "34", "36", "38"],
-        availableColors: ["Dark Blue", "Light Blue", "Black", "Gray"]
+        availableColors: ["Blue", "Black", "Gray"]
     },
     {
         id: 3,
@@ -71,15 +71,15 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 69.99,
         images: [
-            "https://picsum.photos/seed/30/500",
-            "https://picsum.photos/seed/31/500",
-            "https://picsum.photos/seed/32/500"
+            "https://picsum.photos/seed/30/800",
+            "https://picsum.photos/seed/31/800",
+            "https://picsum.photos/seed/32/800"
         ],
         quantity: 60,
         ratings: 4.8,
         category: "women",
         size: "M",
-        color: "Floral Pink",
+        color: "Pink",
         brand: "Zara",
         description: "Elegant summer dress with floral pattern. Lightweight and breathable fabric perfect for warm weather occasions.",
         specifications: {
@@ -90,7 +90,7 @@ const dummyProducts: IProduct[] = [
             "Origin": "Made in India"
         },
         availableSizes: ["XS", "S", "M", "L", "XL"],
-        availableColors: ["Floral Pink", "Floral Blue", "Solid White", "Solid Black"]
+        availableColors: ["Pink", "Blue", "White", "Black"]
     },
     {
         id: 4,
@@ -99,9 +99,9 @@ const dummyProducts: IProduct[] = [
         price: 149.99,
         isDiscounted: false,
         images: [
-            "https://picsum.photos/seed/40/500",
-            "https://picsum.photos/seed/41/500",
-            "https://picsum.photos/seed/42/500"
+            "https://picsum.photos/seed/40/800",
+            "https://picsum.photos/seed/41/800",
+            "https://picsum.photos/seed/42/800"
         ],
         quantity: 35,
         ratings: 4.6,
@@ -118,7 +118,7 @@ const dummyProducts: IProduct[] = [
             "Origin": "Made in Italy"
         },
         availableSizes: ["One Size"],
-        availableColors: ["Brown", "Black", "Tan", "Burgundy"]
+        availableColors: ["Brown", "Black", "Tan", "Red"]
     },
     {
         id: 5,
@@ -128,9 +128,9 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 29.99,
         images: [
-            "https://picsum.photos/seed/10/500",
-            "https://picsum.photos/seed/11/500",
-            "https://picsum.photos/seed/12/500"
+            "https://picsum.photos/seed/10/800",
+            "https://picsum.photos/seed/11/800",
+            "https://picsum.photos/seed/12/800"
         ],
         quantity: 120,
         ratings: 4.4,
@@ -157,9 +157,9 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 149.99,
         images: [
-            "https://picsum.photos/seed/60/500",
-            "https://picsum.photos/seed/61/500",
-            "https://picsum.photos/seed/62/500"
+            "https://picsum.photos/seed/60/800",
+            "https://picsum.photos/seed/61/800",
+            "https://picsum.photos/seed/62/800"
         ],
         quantity: 45,
         ratings: 4.9,
@@ -185,15 +185,15 @@ const dummyProducts: IProduct[] = [
         price: 299.99,
         isDiscounted: false,
         images: [
-            "https://picsum.photos/seed/50/500",
-            "https://picsum.photos/seed/51/500",
-            "https://picsum.photos/seed/52/500"
+            "https://picsum.photos/seed/50/800",
+            "https://picsum.photos/seed/51/800",
+            "https://picsum.photos/seed/52/800"
         ],
         quantity: 30,
         ratings: 4.7,
         category: "electronics",
         size: "42mm",
-        color: "Space Gray",
+        color: "Gray",
         brand: "Apple",
         description: "Advanced fitness tracking with heart rate monitor, GPS, and sleep analysis. Water resistant up to 50m.",
         specifications: {
@@ -204,7 +204,7 @@ const dummyProducts: IProduct[] = [
             "Warranty": "1 year"
         },
         availableSizes: ["38mm", "42mm", "44mm"],
-        availableColors: ["Space Gray", "Silver", "Gold", "Rose Gold"]
+        availableColors: ["Gray", "Silver", "Gold"]
     },
     {
         id: 8,
@@ -214,15 +214,15 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 99.99,
         images: [
-            "https://picsum.photos/seed/70/500",
-            "https://picsum.photos/seed/71/500",
-            "https://picsum.photos/seed/72/500"
+            "https://picsum.photos/seed/70/800",
+            "https://picsum.photos/seed/71/800",
+            "https://picsum.photos/seed/72/800"
         ],
         quantity: 25,
         ratings: 4.5,
         category: "home",
         size: "60\" Height",
-        color: "Brushed Nickel",
+        color: "Silver",
         brand: "West Elm",
         description: "Contemporary floor lamp with adjustable head. Energy-efficient LED bulb included for bright, warm lighting.",
         specifications: {
@@ -233,7 +233,7 @@ const dummyProducts: IProduct[] = [
             "Assembly": "Minimal required"
         },
         availableSizes: ["60\" Height"],
-        availableColors: ["Brushed Nickel", "Matte Black", "Brass", "White"]
+        availableColors: ["Silver", "Black", "Gold", "White"]
     },
     {
         id: 9,
@@ -242,9 +242,9 @@ const dummyProducts: IProduct[] = [
         price: 34.99,
         isDiscounted: false,
         images: [
-            "https://picsum.photos/seed/80/500",
-            "https://picsum.photos/seed/81/500",
-            "https://picsum.photos/seed/82/500"
+            "https://picsum.photos/seed/80/800",
+            "https://picsum.photos/seed/81/800",
+            "https://picsum.photos/seed/82/800"
         ],
         quantity: 80,
         ratings: 4.3,
@@ -261,7 +261,7 @@ const dummyProducts: IProduct[] = [
             "Origin": "Made in Portugal"
         },
         availableSizes: ["12 oz"],
-        availableColors: ["White", "Gray", "Navy", "Mint Green"]
+        availableColors: ["White", "Gray", "Blue", "Green"]
     },
     {
         id: 10,
@@ -271,15 +271,15 @@ const dummyProducts: IProduct[] = [
         isDiscounted: true,
         discountPrice: 89.99,
         images: [
-            "https://picsum.photos/seed/90/500",
-            "https://picsum.photos/seed/91/500",
-            "https://picsum.photos/seed/92/500"
+            "https://picsum.photos/seed/90/800",
+            "https://picsum.photos/seed/91/800",
+            "https://picsum.photos/seed/92/800"
         ],
         quantity: 65,
         ratings: 4.8,
         category: "sports",
         size: "US 10",
-        color: "Neon Orange",
+        color: "Orange",
         brand: "Adidas",
         description: "High-performance trail running shoes with superior grip and cushioning. Waterproof and breathable mesh upper.",
         specifications: {
@@ -290,12 +290,12 @@ const dummyProducts: IProduct[] = [
             "Activity": "Trail running, hiking"
         },
         availableSizes: ["US 7", "US 8", "US 9", "US 10", "US 11", "US 12"],
-        availableColors: ["Neon Orange", "Black/Red", "Blue/Gray", "Green/Yellow"]
+        availableColors: ["Orange", "Black", "Blue", "Green"]
     }
 ];
 
 export const getData = async (url: string) => {
-    await wait(6000);
+    await wait(2000);
 
     try {
         // const headers = await authConfig();

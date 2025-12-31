@@ -4,7 +4,8 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
+// import InnerImageZoom from 'react-inner-image-zoom'
+// import 'react-inner-image-zoom/lib/InnerImageZoom/styles.min.css';
 interface ProductImageGalleryProps {
     images: string[];
     productName: string;
@@ -74,7 +75,7 @@ export default function ProductImageGallery({ images, productName }: ProductImag
                     fill
                     className={cn(
                         'w-full h-full object-cover transition-transform duration-200',
-                        zoomActive && 'scale-150'
+                        zoomActive && 'scale-200'
                     )}
                     style={
                         zoomActive

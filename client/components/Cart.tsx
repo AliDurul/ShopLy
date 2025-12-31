@@ -21,17 +21,16 @@ import { Skeleton } from "./ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { Minus, Plus, Trash2 } from "lucide-react";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, isNamedColor, mapColor } from "@/lib/utils";
 
 
 export function Cart() {
 
     const items = useCartItems();
     const isHydrating = useCartHydrating();
-    const { updateCart, removeCart } = useCartActions();
+    const { updateCart, removeCart, updateItemVariant } = useCartActions();
     const cartItemCount = useCartItemCount();
     const subtotal = useCartSubtotal();
-
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -132,7 +131,7 @@ export function Cart() {
                                                                 variant={sz === item.size ? "secondary" : "outline"}
                                                                 size="sm"
                                                                 className="h-7 px-2 text-xs"
-                                                                onClick={() => updateVariant(item.id, { size: sz })}
+                                                                onClick={() => updateItemVariant(item.id, { size: sz })}
                                                                 aria-label={`Select size ${sz}`}
                                                             >
                                                                 {sz}
@@ -146,7 +145,7 @@ export function Cart() {
                                                         {item.availableColors.map(col => (
                                                             <button
                                                                 key={col}
-                                                                onClick={() => updateVariant(item.id, { color: col })}
+                                                                onClick={() => updateItemVariant(item.id, { color: col })}
                                                                 aria-label={`Select color ${col}`}
                                                                 className={`size-6 rounded-full border flex items-center justify-center text-[10px] font-medium transition ring-offset-background focus:outline-none focus:ring-2 focus:ring-primary ${col === item.color ? 'ring-2' : ''}`}
                                                                 style={{ backgroundColor: mapColor(col) }}
@@ -215,23 +214,3 @@ export function Cart() {
     )
 }
 
-// Helpers
-function mapColor(col: string): string {
-    const lower = col.toLowerCase();
-    switch (lower) {
-        case 'black': return '#000';
-        case 'white': return '#fff';
-        case 'blue': return '#2563eb';
-        case 'red': return '#dc2626';
-        case 'green': return '#16a34a';
-        case 'gray': return '#6b7280';
-        case 'yellow': return '#eab308';
-        case 'purple': return '#7e22ce';
-        case 'pink': return '#db2777';
-        default: return col; // attempt direct CSS color
-    }
-}
-
-function isNamedColor(val: string): boolean {
-    return /^#/.test(val); // if hex we assume we don't need letter overlay
-}
