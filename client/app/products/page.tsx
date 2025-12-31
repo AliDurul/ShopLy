@@ -105,20 +105,23 @@ export default function ProductsPage({ searchParams }: IPageSearchParams) {
     <main className="max-w-700 mx-auto p-5">
       <div className="flex flex-col lg:flex-row gap-3">
         {/* Left Sidebar - Filters */}
-        <Suspense>
-          <FilterSidebar />
-        </Suspense>
+        <div className="hidden lg:block sticky top-30 self-start h-fit">
+          <Suspense>
+            <FilterSidebar />
+          </Suspense>
+        </div>
 
         {/* Right Side - Product Grid */}
         <div className="flex-1">
           <Suspense fallback={<ProductSkeletonGrid />}>
             <ProductsContent searchParams={searchParams} />
           </Suspense>
+          
+          <Suspense>
+            <PaginationBtn />
+          </Suspense>
         </div>
       </div>
-      <Suspense>
-        <PaginationBtn />
-      </Suspense>
     </main>
   );
 }

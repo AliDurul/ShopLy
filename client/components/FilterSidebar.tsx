@@ -169,7 +169,7 @@ export function FilterSidebar() {
 
     return (
         <aside className="w-full lg:w-60 shrink-0 p-4 ">
-            <div className="sticky top-40 space-y-2">
+            <div className="space-y-2">
                 {/* Header */}
                 <div className="flex items-center justify-between">
                     <h2 className="text-lg font-semibold">Filters</h2>

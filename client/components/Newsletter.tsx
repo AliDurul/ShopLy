@@ -1,8 +1,11 @@
 'use client';
 import React from 'react'
 import { Button } from './ui/button'
+import { Input } from './ui/input';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function Newsletter() {
+    const  isMobile  = useIsMobile()
     return (
         <section aria-labelledby="newsletter-title" className="relative overflow-hidden rounded-2xl max-w-5/6 mx-auto">
 
@@ -19,18 +22,18 @@ export default function Newsletter() {
                     </div>
                     <form
                         aria-label="Newsletter subscription"
-                        className="flex w-full md:w-auto items-center gap-3"
+                        className="flex w-full md:w-auto items-center gap-3 flex-col md:flex-row"
                         onSubmit={(e) => e.preventDefault()}
                     >
                         <label htmlFor="newsletter-email" className="sr-only">Email address</label>
-                        <input
+                        <Input
                             id="newsletter-email"
                             type="email"
                             required
                             placeholder="you@example.com"
-                            className="flex-1 md:w-96 h-12 rounded-md border border-neutral-300 bg-white px-4 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+                            className="border border-neutral-300 placeholder:text-white "
                         />
-                        <Button type="submit" variant="secondary" className="h-12 px-6">Subscribe</Button>
+                        <Button size={isMobile ? 'sm' : 'lg'} type="submit" variant="secondary" className="">Subscribe</Button>
                     </form>
                 </div>
                 <p className="text-xs md:text-sm text-white/90 mt-4">By subscribing, you agree to receive marketing emails from ShopLy. You can unsubscribe at any time.</p>

@@ -2,9 +2,8 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Shirt, Gem, Smartphone, Dumbbell } from "lucide-react"
+import { Shirt, Gem, Smartphone, Dumbbell, Baby, Flame, Sparkles, Home as HomeIcon } from "lucide-react"
 import { LuHouse } from "react-icons/lu";
-import { useIsMobile } from "@/hooks/use-mobile"
 
 import {
     NavigationMenu,
@@ -15,6 +14,11 @@ import {
     NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel"
 
 const mensCategories = [
     { title: "T-Shirts & Polos", href: "/products?cat=men&q=t-shirts", description: "Casual and formal t-shirts, polo shirts" },
@@ -77,12 +81,50 @@ const sportsCategories = [
     // { title: "Team Sports", href: "/products?cat=sports&q=team", description: "Football, basketball, cricket equipment" },
 ]
 
+// Mobile carousel categories
+const mobileCategories = [
+    { label: "Home", href: "/", icon: HomeIcon },
+    { label: "Men", href: "/products?cat=men", icon: Shirt },
+    { label: "Women", href: "/products?cat=women", icon: Gem },
+    { label: "Kids", href: "/products?cat=kids", icon: Baby },
+    { label: "Electronics", href: "/products?cat=electronics", icon: Smartphone },
+    { label: "Home & Living", href: "/products?cat=home-living", icon: LuHouse },
+    { label: "Sports", href: "/products?cat=sports", icon: Dumbbell },
+    { label: "Sale", href: "/sale", icon: Flame, className: "text-destructive" },
+    { label: "New", href: "/new-arrivals", icon: Sparkles },
+]
+
 export function HeaderCategories() {
-    const isMobile = useIsMobile();
 
     return (
         <nav>
-            <NavigationMenu className="max-w-full py-3" viewport={isMobile}>
+            {/* Mobile Carousel - visible on small screens */}
+            <div className="md:hidden py-2">
+                <Carousel
+                    opts={{ align: 'start', dragFree: true }}
+                    className="w-full"
+                >
+                    <CarouselContent className="-ml-2">
+                        {mobileCategories.map((cat) => {
+                            const Icon = cat.icon;
+                            return (
+                                <CarouselItem key={cat.label} className="basis-auto pl-2">
+                                    <Link
+                                        href={cat.href}
+                                        className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg hover:bg-accent transition-colors ${cat.className || ''}`}
+                                    >
+                                        <Icon className="size-5" />
+                                        <span className="text-xs font-medium whitespace-nowrap">{cat.label}</span>
+                                    </Link>
+                                </CarouselItem>
+                            );
+                        })}
+                    </CarouselContent>
+                </Carousel>
+            </div>
+
+            {/* Desktop NavigationMenu - hidden on small screens */}
+            <NavigationMenu className="max-w-full py-3 hidden md:flex">
                 <NavigationMenuList className="flex-wrap">
 
                     {/* Home */}

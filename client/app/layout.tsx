@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Suspense } from "react";
 import { NavigationProvider } from "@/context/NavigationContext";
+import BottomNav from "@/components/BottomNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased pb-16 md:pb-0`}>
         <Header />
         <NavigationProvider>
           {children}
@@ -36,6 +37,7 @@ export default function RootLayout({
         <Suspense>
           <Footer />
         </Suspense>
+        <BottomNav />
       </body>
     </html>
   );
