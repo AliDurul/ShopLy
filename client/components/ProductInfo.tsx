@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Heart, Share2, Truck, Shield, RotateCw } from 'lucide-react';
-import { useFavoriteActions, useIsFavorite } from '@/store/favoriteStore';
+import { useWishListActions, useIsWishList } from '@/store/wishListStore';
 import AddCartBtn from './AddCartBtn';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
 import ProductVariantBtns from './ProductVariantBtns';
@@ -14,8 +14,8 @@ interface ProductInfoProps {
 
 export default function ProductInfo({ product }: ProductInfoProps) {
     // Hooks
-    const { toggleFavorite } = useFavoriteActions();
-    const isFavorited = useIsFavorite(product.id);
+    const { toggleWishList } = useWishListActions();
+    const isWishListd = useIsWishList(product.id);
 
     // variables & states
     const discountPercent = Math.round(((product.price - (product?.discountPrice ?? product.price)) / product.price) * 100);
@@ -109,13 +109,13 @@ export default function ProductInfo({ product }: ProductInfoProps) {
                             variant="outline"
                             size="lg"
                             className="px-6"
-                            onClick={() => toggleFavorite(product)}
+                            onClick={() => toggleWishList(product)}
                         >
-                            <Heart className={`size-5 ${isFavorited ? 'fill-red-500 text-red-500' : ''}`} />
+                            <Heart className={`size-5 ${isWishListd ? 'fill-red-500 text-red-500' : ''}`} />
                         </Button>
                     </TooltipTrigger>
                     <TooltipContent>
-                        <p>{isFavorited ? 'Remove from Favorites' : 'Add to Favorites'}</p>
+                        <p>{isWishListd ? 'Remove from WishLists' : 'Add to WishLists'}</p>
                     </TooltipContent>
                 </Tooltip>
 

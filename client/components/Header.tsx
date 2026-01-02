@@ -1,13 +1,14 @@
 import Link from 'next/link'
-import React, { Suspense } from 'react'
+import { Suspense } from 'react'
 import { FiSearch, FiUser } from 'react-icons/fi'
 import SearchInput from './SearchInput'
 import { Separator } from './ui/separator'
-import { Cart } from './Cart'
-import { Favorite } from './Favorite'
+import { CartSheet } from './CartSheet'
 import { HeaderCategories } from './HeaderCategories'
+import HeaderWishListBtn from './HeaderWishListBtn'
 
-export default function Header() {
+export default async function Header() {
+
     return (
         <>
             {/* Top Strip */}
@@ -47,10 +48,10 @@ export default function Header() {
                                 <span className='text-sm font-medium'>Login / Register</span>
                             </Link>
 
-                            {/* Favorites */}
-                            <Favorite />
+                            {/* WishLists */}
+                            <HeaderWishListBtn />
 
-                            <Cart />
+                            <CartSheet />
 
                         </div>
                     </div>

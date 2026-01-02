@@ -13,7 +13,7 @@ interface Actions {
 }
 
 interface State {
-    cartProducts: IProduct[];
+    cartItems: IProduct[];
     isHydrating: boolean;
     actions: Actions;
 }
@@ -21,22 +21,22 @@ interface State {
 const useCartStore = create<State>()(
     persist(
         (set, get) => ({
-            cartProducts: [],
+            cartItems: [],
             isHydrating: true,
             actions: {
                 setHydrating: (v) => set({ isHydrating: v }),
                 addCart: (item, quantity = 1) => {
-                    const existingItem = get().cartProducts.find(ci => ci.id === item.id);
+                    const existingItem = get().cartItems.find(ci => ci.id === item.id);
                     if (existingItem) {
                         set({
-                            cartProducts: get().cartProducts.map(ci =>
+                            cartItems: get().cartItems.map(ci =>
                                 ci.id === item.id ? { ...ci, quantity: ci.quantity + quantity } : ci
                             ),
                         });
                     } else {
                         set({
-                            // cartProducts: [
-                            //     ...get().cartProducts,
+                            // cartItems: [
+                            //     ...get().cartItems,
                             //     {
                             //         ...item,
                             //         quantity,
@@ -46,36 +46,36 @@ const useCartStore = create<State>()(
                             //         color: item.color || 'Black',
                             //     }
                             // ],
-                            cartProducts: [...get().cartProducts, { ...item, quantity }],
+                            cartItems: [...get().cartItems, { ...item, quantity }],
                         });
                     }
                 },
                 removeCart: (productId) => {
                     set({
-                        cartProducts: get().cartProducts.filter(item => item.id !== productId),
+                        cartItems: get().cartItems.filter(item => item.id !== productId),
                     });
                 },
                 updateCart: (productId, quantity) => {
                     set({
-                        cartProducts: get().cartProducts.map(item =>
+                        cartItems: get().cartItems.map(item =>
                             item.id === productId ? { ...item, quantity } : item
                         ),
                     });
                 },
                 updateItemVariant: (productId, patch) => {
                     set({
-                        cartProducts: get().cartProducts.map(item => item.id === productId ? { ...item, ...patch } : item)
+                        cartItems: get().cartItems.map(item => item.id === productId ? { ...item, ...patch } : item)
                     });
                 },
                 clearCarts: () => {
-                    set({ cartProducts: [] });
+                    set({ cartItems: [] });
                 }
             }
         }),
         {
             name: "shoply_cart",
             // skipHydration: true,
-            partialize: (state) => ({ cartProducts: state.cartProducts }),
+            partialize: (state) => ({ cartItems: state.cartItems }),
             storage: createJSONStorage(() => localStorage),
             onRehydrateStorage: () => {
                 return (state, error) => {
@@ -91,19 +91,19 @@ const useCartStore = create<State>()(
     )
 );
 
-export const useCartItems = () => useCartStore((state) => state.cartProducts);
+export const useCartItems = () => useCartStore((state) => state.cartItems);
 export const useCartHydrating = () => useCartStore((state) => state.isHydrating);
 export const useCartActions = () => useCartStore((state) => state.actions);
 
 // Reactive computed selectors - these will trigger re-renders
 export const useCartItemCount = () => useCartStore((state) => 
-    state.cartProducts.reduce((count, item) => count + item.quantity, 0)
+    state.cartItems.reduce((count, item) => count + item.quantity, 0)
 );
 
 export const useCartSubtotal = () => useCartStore((state) => 
-    state.cartProducts.reduce((total, item) => total + (item?.discountPrice ?? item.price) * item.quantity, 0)
+    state.cartItems.reduce((total, item) => total + (item?.discountPrice ?? item.price) * item.quantity, 0)
 );
 
 export const useCartProduct = (productId: number) => useCartStore((state) => 
-    state.cartProducts.find(item => item.id === productId)
+    state.cartItems.find(item => item.id === productId)
 );

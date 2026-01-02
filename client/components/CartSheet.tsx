@@ -25,7 +25,7 @@ import { formatCurrency, isNamedColor, mapColor } from "@/lib/utils";
 import Link from "next/link";
 
 
-export function Cart() {
+export function CartSheet() {
 
     const items = useCartItems();
     const isHydrating = useCartHydrating();
@@ -214,12 +214,17 @@ export function Cart() {
                                 </div>
                                 <SheetFooter className="p-4 border-t flex gap-4">
                                     <div className="flex gap-3 flex-wrap flex-1">
-                                        <Button className="flex-1 uppercase">Checkout</Button>
-                                        <Button variant={'secondary'} className="flex-1 uppercase">View Cart</Button>
+                                        <SheetClose asChild>
+                                            <Button className="flex-1 uppercase" asChild>
+                                                <Link href="/checkout">Checkout</Link>
+                                            </Button>
+                                        </SheetClose>
+                                        <SheetClose asChild>
+                                            <Button variant={'secondary'} className="flex-1 uppercase" asChild>
+                                                <Link href="/cart">View Cart</Link>
+                                            </Button>
+                                        </SheetClose>
                                     </div>
-                                    {/* <SheetClose asChild>
-                            <Button variant="outline" className="flex-1">Close</Button>
-                        </SheetClose> */}
                                 </SheetFooter>
                             </>
                         )

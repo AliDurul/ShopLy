@@ -16,7 +16,7 @@ import {
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip"
 import { FiHeart } from "react-icons/fi"
 import { Badge } from "./ui/badge"
-import { useFavoriteActions, useFavoriteHydrating, useFavoriteItems, useFavoriteCount } from "@/store/favoriteStore"
+import { useWishListActions, useWishListHydrating, useWishListItems, useWishListCount } from "@/store/wishListStore"
 import { Skeleton } from "./ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
@@ -25,12 +25,12 @@ import { formatCurrency, slugify } from "@/lib/utils";
 import { useCartActions } from "@/store/cartStore";
 
 
-export function Favorite() {
+export function WishList() {
 
-    const items = useFavoriteItems();
-    const isHydrating = useFavoriteHydrating();
-    const { removeFavorite, clearFavorites } = useFavoriteActions();
-    const favoriteCount = useFavoriteCount();
+    const items = useWishListItems();
+    const isHydrating = useWishListHydrating();
+    const { removeWishList, clearWishLists } = useWishListActions();
+    const favoriteCount = useWishListCount();
     const { addCart } = useCartActions();
 
     return (
@@ -42,7 +42,7 @@ export function Favorite() {
                             <FiHeart size={22} className="text-gray-700 hover:text-red-500 transition-colors cursor-pointer" />
                         </TooltipTrigger>
                         <TooltipContent>
-                            <p>Favorites</p>
+                            <p>WishLists</p>
                         </TooltipContent>
                     </Tooltip>
                     {
@@ -59,7 +59,7 @@ export function Favorite() {
             <SheetContent side="left" className="w-[360px] sm:w-[400px] p-0">
                 <div className="w-full">
                     <SheetHeader className="p-6 border-b">
-                        <SheetTitle>My Favorites</SheetTitle>
+                        <SheetTitle>My WishLists</SheetTitle>
                         <SheetDescription>Your saved items & wishlist.</SheetDescription>
                     </SheetHeader>
                     <ScrollArea className="h-[calc(100vh-250px)] px-6 py-4 ">
@@ -89,9 +89,9 @@ export function Favorite() {
                                 {items.map(item => (
                                     <div key={item.id} className="group border rounded-lg p-3 flex gap-4 items-start hover:shadow-md transition-shadow">
                                         <Link href={`/products/${slugify(item.name)}`} className="relative size-20 shrink-0 rounded-md overflow-hidden bg-muted">
-                                            {item.image ? (
+                                            {item.images ? (
                                                 <Image
-                                                    src={item.image}
+                                                    src={item.images[0]}
                                                     alt={item.name}
                                                     fill
                                                     className="object-cover object-top" />
@@ -113,7 +113,7 @@ export function Favorite() {
                                                     variant="ghost" 
                                                     size="icon" 
                                                     className="size-7 hover:text-destructive" 
-                                                    onClick={() => removeFavorite(item.id)} 
+                                                    onClick={() => removeWishList(item.id)} 
                                                     aria-label="Remove from favorites"
                                                 >
                                                     <X className="size-4" />
@@ -160,7 +160,7 @@ export function Favorite() {
                             <Button 
                                 variant="destructive" 
                                 className="flex-1"
-                                onClick={clearFavorites}
+                                onClick={clearWishLists}
                             >
                                 Clear All
                             </Button>

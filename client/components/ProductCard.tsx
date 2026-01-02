@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 import Image from "next/image"
 import { useCartActions, useCartProduct } from "@/store/cartStore"
 import { LuHeart } from "react-icons/lu"
-import { useFavoriteActions, useIsFavorite } from "@/store/favoriteStore"
+import { useWishListActions, useIsWishList } from "@/store/wishListStore"
 import Link from "next/link";
 import ProductOverview from "./ProductOverview";
 import AddCartBtn from "./AddCartBtn";
@@ -13,8 +13,8 @@ import { useRouter } from "next/navigation";
 
 
 export default function ProductCard({ product }: { product: IProduct }) {
-    const { toggleFavorite } = useFavoriteActions();
-    const isFavorited = useIsFavorite(product.id);
+    const { toggleWishList } = useWishListActions();
+    const isWishListd = useIsWishList(product.id);
     const router = useRouter()
 
     return (
@@ -42,16 +42,16 @@ export default function ProductCard({ product }: { product: IProduct }) {
                     <Button
                         variant={'ghost'}
                         size={'sm'}
-                        className={`rounded-full p-0 cursor-pointer bg-white transition-colors ${isFavorited
+                        className={`rounded-full p-0 cursor-pointer bg-white transition-colors ${isWishListd
                             ? 'text-red-500 hover:text-red-600'
                             : 'hover:bg-primary/80! hover:text-primary-foreground'
                             }`}
                         onClick={(e) => {
                             e.stopPropagation();
-                            toggleFavorite(product);
+                            toggleWishList(product);
                         }}
                     >
-                        <LuHeart className={isFavorited ? 'fill-current' : ''} />
+                        <LuHeart className={isWishListd ? 'fill-current' : ''} />
                     </Button>
                 </div>
                 <Image

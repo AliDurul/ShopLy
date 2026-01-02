@@ -5,14 +5,14 @@ import { Separator } from "./ui/separator";
 import { Button } from "./ui/button";
 import { Badge } from "./ui/badge";
 
-import { useFavoriteActions, useIsFavorite } from "@/store/favoriteStore";
+import { useWishListActions, useIsWishList } from "@/store/wishListStore";
 import AddCartBtn from "./AddCartBtn";
 import ProductVariantBtns from "./ProductVariantBtns";
 
 export default function ProductOverview({ product }: { product: IProduct }) {
 
-    const { toggleFavorite } = useFavoriteActions();
-    const isFavorited = useIsFavorite(product.id);
+    const { toggleWishList } = useWishListActions();
+    const isWishListd = useIsWishList(product.id);
 
     return (
         <Dialog>
@@ -96,14 +96,14 @@ export default function ProductOverview({ product }: { product: IProduct }) {
                                 <Button
                                     variant={'outline'}
                                     size={'sm'}
-                                    className={`inline-flex items-center gap-2 ${isFavorited ? 'fill-red-600 text-red-600' : ''}`}
+                                    className={`inline-flex items-center gap-2 ${isWishListd ? 'fill-red-600 text-red-600' : ''}`}
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        toggleFavorite(product);
+                                        toggleWishList(product);
                                     }}
                                 >
-                                    <LuHeart className={isFavorited ? 'fill-current' : ''} />
-                                    <span className="text-xs">{isFavorited ? 'Favorited' : 'Add to Favorites'}</span>
+                                    <LuHeart className={isWishListd ? 'fill-current' : ''} />
+                                    <span className="text-xs">{isWishListd ? 'WishListd' : 'Add to WishLists'}</span>
                                 </Button>
 
                                 <AddCartBtn product={product} />

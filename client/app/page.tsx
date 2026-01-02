@@ -156,11 +156,13 @@ export default function Home() {
       href: '/category/beauty',
     }
   ];
-  
+
   return (
-    <main className="space-y-14 ">
+    <main className="space-y-14 pb-5 bg-[#f5f0f0] ">
       <Hero />
 
+      <div className='-mt-10' />
+      
       <ProductCarausel
         title="Popular Products"
         subTitle="Do not miss the current offers until the end of March."
@@ -213,7 +215,7 @@ export default function Home() {
 
       <Newsletter />
 
-
+      {/* <div className='' /> */}
 
     </main>
   )

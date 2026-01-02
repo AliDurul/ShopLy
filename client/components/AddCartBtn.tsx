@@ -1,5 +1,5 @@
 import { useCartActions, useCartProduct } from '@/store/cartStore';
-import { useFavoriteActions } from '@/store/favoriteStore';
+import { useWishListActions } from '@/store/wishListStore';
 import React from 'react'
 import { Button } from './ui/button';
 import { Minus } from 'lucide-react';

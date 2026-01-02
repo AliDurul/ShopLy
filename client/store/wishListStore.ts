@@ -2,11 +2,11 @@ import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware'
 
 interface Actions {
-    addFavorite: (item: IProduct) => void;
-    removeFavorite: (productId: number) => void;
-    toggleFavorite: (item: IProduct) => void;
-    // isFavorite: (productId: number) => boolean;
-    clearFavorites: () => void;
+    addWishList: (item: IProduct) => void;
+    removeWishList: (productId: number) => void;
+    toggleWishList: (item: IProduct) => void;
+    // isWishList: (productId: number) => boolean;
+    clearWishLists: () => void;
     setHydrating: (v: boolean) => void;
 }
 
@@ -16,14 +16,14 @@ interface State {
     actions: Actions;
 }
 
-const useFavoriteStore = create<State>()(
+const useWishListStore = create<State>()(
     persist(
         (set, get) => ({
             favoriteItems: [],
             isHydrating: true,
             actions: {
                 setHydrating: (v) => set({ isHydrating: v }),
-                addFavorite: (item) => {
+                addWishList: (item) => {
                     const exists = get().favoriteItems.find(fi => fi.id === item.id);
                     if (!exists) {
                         set({
@@ -31,26 +31,26 @@ const useFavoriteStore = create<State>()(
                         });
                     }
                 },
-                removeFavorite: (productId) => {
+                removeWishList: (productId) => {
                     set({
                         favoriteItems: get().favoriteItems.filter(item => item.id !== productId),
                     });
                 },
-                toggleFavorite: (item) => {
+                toggleWishList: (item) => {
                     const exists = get().favoriteItems.find(fi => fi.id === item.id);
                     if (exists) {
-                        get().actions.removeFavorite(item.id);
+                        get().actions.removeWishList(item.id);
                     } else {
-                        get().actions.addFavorite(item);
+                        get().actions.addWishList(item);
                     }
                 },
-                clearFavorites: () => {
+                clearWishLists: () => {
                     set({ favoriteItems: [] });
                 }
             }
         }),
         {
-            name: "shoply_favorites",
+            name: "shoply_whishList",
             partialize: (state) => ({ favoriteItems: state.favoriteItems }),
             storage: createJSONStorage(() => localStorage),
             onRehydrateStorage: () => {
@@ -59,7 +59,7 @@ const useFavoriteStore = create<State>()(
                         console.warn('hydrate error', error);
                     }
                     setTimeout(() => {
-                        useFavoriteStore.getState().actions.setHydrating(false);
+                        useWishListStore.getState().actions.setHydrating(false);
                     }, 0);
                 };
             },
@@ -67,10 +67,10 @@ const useFavoriteStore = create<State>()(
     )
 );
 
-export const useFavoriteItems = () => useFavoriteStore((state) => state.favoriteItems);
-export const useFavoriteHydrating = () => useFavoriteStore((state) => state.isHydrating);
-export const useFavoriteActions = () => useFavoriteStore((state) => state.actions);
+export const useWishListItems = () => useWishListStore((state) => state.favoriteItems);
+export const useWishListHydrating = () => useWishListStore((state) => state.isHydrating);
+export const useWishListActions = () => useWishListStore((state) => state.actions);
 
 // Reactive computed selector
-export const useFavoriteCount = () => useFavoriteStore((state) => state.favoriteItems.length);
-export const useIsFavorite = (productId: number) => useFavoriteStore((state) => state.favoriteItems.some(item => item.id === productId));
+export const useWishListCount = () => useWishListStore((state) => state.favoriteItems.length);
+export const useIsWishList = (productId: number) => useWishListStore((state) => state.favoriteItems.some(item => item.id === productId));

@@ -11,6 +11,7 @@
 :root {
   --radius: 0.65rem;
   --background: oklch(1 0 0);
+  --secondary-background: hsl(0, 20%, 95%);
   --foreground: oklch(0.141 0.005 285.823);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
@@ -50,6 +51,7 @@
 
 @theme inline {
   --color-background: var(--background);
+  --color-secondary-background: var(--secondary-background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);

@@ -7,7 +7,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 export default function Newsletter() {
     const  isMobile  = useIsMobile()
     return (
-        <section aria-labelledby="newsletter-title" className="relative overflow-hidden rounded-2xl max-w-5/6 mx-auto">
+        <section aria-labelledby="newsletter-title" className="relative overflow-hidden rounded-2xl max-w-5/6 mx-auto mb-12">
 
             <div className="relative  border border-primary/20 p-10 md:p-14 shadow-sm shadow-primary/10   bg-linear-to-bl from-primary/90 to-secondary ">
 

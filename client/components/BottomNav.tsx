@@ -15,7 +15,7 @@ import { FilterSidebar } from './FilterSidebar';
 const navItems = [
     { href: '/', label: 'Home', icon: Home },
     // { href: '/products?search=true', label: 'Search', icon: Search, matchPath: '/products' },
-    { href: '/wishlist', label: 'Wishlist', icon: Heart },
+    { href: '/my-wishlist', label: 'Wishlist', icon: Heart },
     { href: '/orders', label: 'Orders', icon: Package },
     { href: '/account', label: 'Account', icon: User },
 ];

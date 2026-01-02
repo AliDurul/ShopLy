@@ -12,7 +12,7 @@ export default function ProdCarauselLinks({ categories }: { categories?: string[
 
     return (
         <Carousel
-            className="  min-w-0 flex items-center "
+            className="min-w-0 flex items-center "
             opts={{ align: 'start', dragFree: true, loop: false }}
         >
             <CarouselContent className="ml-1">

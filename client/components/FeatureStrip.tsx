@@ -53,7 +53,7 @@ export function FeatureStrip() {
     return (
         <section
             aria-labelledby="benefits-heading"
-            className="mx-auto w-full max-w-7xl"
+            className="w-full px-10 mx-auto  max-w-7xl "
         >
             <h2 id="benefits-heading" className="sr-only">
                 Shopping benefits
