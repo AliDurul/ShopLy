@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { Suspense } from "react";
 import { NavigationProvider } from "@/context/NavigationContext";
 import BottomNav from "@/components/BottomNav";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
           <Footer />
         </Suspense>
         <BottomNav />
+        <Toaster />
       </body>
     </html>
   );

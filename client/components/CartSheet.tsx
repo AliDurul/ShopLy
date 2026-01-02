@@ -38,7 +38,9 @@ export function CartSheet() {
                 <div className='relative  '>
                     <Tooltip>
                         <TooltipTrigger asChild>
-                            <FiShoppingCart size={22} className="text-gray-700 hover:text-secondary transition-colors cursor-pointer" />
+                            <Button variant="ghost" size={'sm'} className="p-0 hover:text-secondary text-gray-700  transition-colors cursor-pointer rounded-full">
+                                <FiShoppingCart size={22} className="" />
+                            </Button>
                         </TooltipTrigger>
                         <TooltipContent>
                             <p>Shopping Cart</p>
@@ -48,7 +50,7 @@ export function CartSheet() {
                         isHydrating
                             ? <Skeleton className="bg-secondary absolute -top-2 -right-2 size-3 rounded-full px-1 font-mono " />
                             : cartItemCount > 0 && (
-                                <Badge variant={'secondary'} className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
+                                <Badge variant={'secondary'} className="absolute -top-1 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
                                     {cartItemCount}
                                 </Badge>
                             )

@@ -2,7 +2,7 @@
 import React from 'react'
 import { Button } from './ui/button'
 import { Input } from './ui/input';
-import { useIsMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useMobile';
 
 export default function Newsletter() {
     const  isMobile  = useIsMobile()

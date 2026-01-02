@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Heart, Package, User, SlidersHorizontal } from 'lucide-react';
+import { Home, Search, Heart, Package, User, SlidersHorizontal, LogOut, LogIn } from 'lucide-react';
 import {
     Drawer,
     DrawerContent,
@@ -11,30 +11,29 @@ import {
     DrawerTrigger,
 } from '@/components/ui/drawer';
 import { FilterSidebar } from './FilterSidebar';
+import { useState } from 'react';
+import { LoginModal } from './LoginModal';
 
 const navItems = [
     { href: '/', label: 'Home', icon: Home },
-    // { href: '/products?search=true', label: 'Search', icon: Search, matchPath: '/products' },
     { href: '/my-wishlist', label: 'Wishlist', icon: Heart },
-    { href: '/orders', label: 'Orders', icon: Package },
-    { href: '/account', label: 'Account', icon: User },
+    { href: '/my-orders', label: 'Orders', icon: Package },
+    // { href: '/my-account', label: 'Account', icon: User },
 ];
 
 export default function BottomNav() {
+    const [isLogin, setIsLogin] = useState(false);
     const pathname = usePathname();
     const isProductsPage = pathname === '/products' || pathname.startsWith('/products/');
 
-    const isActive = (item: typeof navItems[0]) => {
+    const isActive = (href: string) => {
         // Exact match for home
-        if (item.href === '/') {
+        if (href === '/') {
             return pathname === '/';
         }
-        // For search, check if we're on products page
-        // if (item.matchPath) {
-        //     return pathname === item.matchPath;
-        // }
+
         // Starts with for other routes
-        return pathname.startsWith(item.href);
+        return pathname.startsWith(href);
     };
 
     return (
@@ -42,26 +41,26 @@ export default function BottomNav() {
             <div className="flex justify-around items-center h-16">
                 {navItems.map((item, index) => {
                     const Icon = item.icon;
-                    const active = isActive(item);
+                    const active = isActive(item.href);
 
                     return (
-                        <div key={item.label}>
+                        <>
                             <Link
                                 key={item.label}
                                 href={item.href}
-                                className={`flex flex-col items-center justify-center flex-1 h-full pt-2 pb-1 transition-colors ${active ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                                className={`flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors ${active ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
                                     }`}
                             >
                                 <Icon className="size-5 mb-1" />
                                 <span className="text-xs font-medium">{item.label}</span>
                             </Link>
 
-                            {/* Filter Button - After Home, only on products page */}
+                            {/* Filter Button - between Home and Wishlist, only on products page */}
                             {index === 0 && isProductsPage && (
-                                <Drawer>
+                                <Drawer key="filters">
                                     <DrawerTrigger asChild>
                                         <button
-                                            className="flex flex-col items-center justify-center flex-1 h-full pt-2 pb-1 transition-colors text-primary"
+                                            className="flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors text-primary"
                                         >
                                             <SlidersHorizontal className="size-5 mb-1" />
                                             <span className="text-xs font-medium">Filters</span>
@@ -77,9 +76,38 @@ export default function BottomNav() {
                                     </DrawerContent>
                                 </Drawer>
                             )}
-                        </div>
+                        </>
                     );
                 })}
+                {isLogin
+                    ? <>
+                        <Link
+                            key={'account'}
+                            href={'my-account'}
+                            className={`flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors ${isActive('/my-account') ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                                }`}
+                        >
+                            <User className="size-5 mb-1" />
+                            <span className="text-xs font-medium">Account</span>
+                        </Link>
+                        <button
+                            onClick={() => setIsLogin(false)}
+                            key={'logout'}
+                            className="flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors text-muted-foreground hover:text-foreground">
+                            <LogOut className="size-5 mb-1" />
+                            <span className="text-xs font-medium">Logout</span>
+                        </button>
+                    </>
+                    :
+                    <LoginModal key={'login'} >
+                        <button
+                            className="flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors  text-muted-foreground hover:text-foreground">
+                            <LogIn className="size-5 mb-1" />
+                            <span className="text-xs font-medium">Login</span>
+                        </button>
+                    </LoginModal>
+
+                }
             </div>
             {/* Safe area for devices with home indicator */}
             <div className="h-[env(safe-area-inset-bottom)]" />

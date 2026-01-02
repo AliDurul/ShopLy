@@ -5,7 +5,9 @@ import SearchInput from './SearchInput'
 import { Separator } from './ui/separator'
 import { CartSheet } from './CartSheet'
 import { HeaderCategories } from './HeaderCategories'
-import HeaderWishListBtn from './HeaderWishListBtn'
+import WishListBtn from './WishListBtn'
+import { LoginModal } from './LoginModal'
+import HeaderAuthBtns from './HeaderAuthBtns'
 
 export default async function Header() {
 
@@ -43,13 +45,9 @@ export default async function Header() {
                         {/* Right Side Actions */}
                         <div className='flex items-center gap-6'>
                             {/* Login/Register */}
-                            <Link href="/login" className='hidden sm:flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors'>
-                                <FiUser size={22} />
-                                <span className='text-sm font-medium'>Login / Register</span>
-                            </Link>
+                            <HeaderAuthBtns />
 
-                            {/* WishLists */}
-                            <HeaderWishListBtn />
+                            <WishListBtn />
 
                             <CartSheet />
 

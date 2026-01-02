@@ -10,8 +10,7 @@ import { User, MapPin, Package, Heart, LogOut, ChevronRight } from 'lucide-react
 import { cn } from '@/lib/utils';
 
 const menuItems = [
-    { href: '/my-profile', label: 'My Profile', icon: User },
-    // { href: '/my-addresses', label: 'My Addresses', icon: MapPin },
+    { href: '/my-account', label: 'My Account', icon: User },
     { href: '/my-orders', label: 'My Orders', icon: Package },
     { href: '/my-wishlist', label: 'My Wishlist', icon: Heart },
 ];
