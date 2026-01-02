@@ -1,12 +1,11 @@
 import Link from 'next/link'
 import { Suspense } from 'react'
-import { FiSearch, FiUser } from 'react-icons/fi'
+import { FiSearch, } from 'react-icons/fi'
 import SearchInput from './SearchInput'
 import { Separator } from './ui/separator'
 import { CartSheet } from './CartSheet'
 import { HeaderCategories } from './HeaderCategories'
 import WishListBtn from './WishListBtn'
-import { LoginModal } from './LoginModal'
 import HeaderAuthBtns from './HeaderAuthBtns'
 
 export default async function Header() {

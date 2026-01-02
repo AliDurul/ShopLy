@@ -1,7 +1,6 @@
 'use client';
 import { LogIn, LogOut } from 'lucide-react';
-import React, { useState } from 'react'
-import { FiUser } from 'react-icons/fi'
+import { useState } from 'react'
 import { LoginModal } from './LoginModal';
 
 export default function HeaderAuthBtns() {

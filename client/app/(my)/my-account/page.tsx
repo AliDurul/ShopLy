@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import Image from 'next/image';
 import { User, Mail, Phone, Calendar, MapPin, Camera, Edit2, Save, X, Package, Heart, CreditCard, Shield, Bell, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

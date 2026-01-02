@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Search, Heart, Package, User, SlidersHorizontal, LogOut, LogIn } from 'lucide-react';
+import { Home, Heart, Package, User, SlidersHorizontal, LogOut, LogIn } from 'lucide-react';
 import {
     Drawer,
     DrawerContent,
