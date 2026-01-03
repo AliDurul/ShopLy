@@ -28,7 +28,7 @@ export default function WishListBtn() {
             </Tooltip>
             {
                 isHydrating
-                    ? <Skeleton className="bg-primary absolute -top-2 -right-2 size-3 rounded-full px-1 font-mono " />
+                    ? <Skeleton className="bg-primary absolute top-0 right-0 size-3 rounded-full px-1 font-mono " />
                     : favoriteCount > 0 && (
                         <Badge variant={'destructive'} className="absolute -top-1 -right-1 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
                             {favoriteCount}

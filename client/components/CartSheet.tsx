@@ -48,17 +48,13 @@ export function CartSheet() {
                     </Tooltip>
                     {
                         isHydrating
-                            ? <Skeleton className="bg-secondary absolute -top-2 -right-2 size-3 rounded-full px-1 font-mono " />
+                            ? <Skeleton className="bg-secondary absolute top-0 right-0  size-3 rounded-full px-1 font-mono " />
                             : cartItemCount > 0 && (
                                 <Badge variant={'secondary'} className="absolute -top-1 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
                                     {cartItemCount}
                                 </Badge>
                             )
                     }
-
-                    {/* <Badge className="absolute -top-2 -right-2 h-5 min-w-5 rounded-full px-1 font-mono tabular-nums">
-                        {cartItemCount}
-                    </Badge> */}
                 </div>
             </SheetTrigger>
             <SheetContent side="right" className="w-[360px] sm:w-[400px] p-0">

@@ -18,7 +18,6 @@ const navItems = [
     { href: '/', label: 'Home', icon: Home },
     { href: '/my-wishlist', label: 'Wishlist', icon: Heart },
     { href: '/my-orders', label: 'Orders', icon: Package },
-    // { href: '/my-account', label: 'Account', icon: User },
 ];
 
 export default function BottomNav() {
@@ -91,16 +90,17 @@ export default function BottomNav() {
                             <span className="text-xs font-medium">Account</span>
                         </Link>
                         <button
-                            onClick={() => setIsLogin(false)}
                             key={'logout'}
+                            onClick={() => setIsLogin(false)}
                             className="flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors text-muted-foreground hover:text-foreground">
                             <LogOut className="size-5 mb-1" />
                             <span className="text-xs font-medium">Logout</span>
                         </button>
                     </>
                     :
-                    <LoginModal key={'login'} >
+                    <LoginModal defaultView='login' >
                         <button
+                            key={'login'}
                             className="flex flex-col items-center justify-center h-full pt-2 pb-1 px-3 transition-colors  text-muted-foreground hover:text-foreground">
                             <LogIn className="size-5 mb-1" />
                             <span className="text-xs font-medium">Login</span>
