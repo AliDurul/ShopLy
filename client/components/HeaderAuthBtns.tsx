@@ -1,5 +1,5 @@
 'use client';
-import { LogIn, LogOut, User, Package, Heart, ChevronDown } from 'lucide-react';
+import { LogIn, LogOut, User, Package, Heart, ChevronDown, LayoutDashboard } from 'lucide-react';
 import { useState } from 'react'
 import { LoginModal } from './LoginModal';
 import { Button } from './ui/button';
@@ -19,6 +19,7 @@ const demoUser = {
     name: 'John Doe',
     email: 'john.doe@example.com',
     avatar: '', // Can be a URL to user's avatar
+    role: 'Admin'
 };
 
 export default function HeaderAuthBtns() {
@@ -75,6 +76,16 @@ export default function HeaderAuthBtns() {
                                     </Link>
                                 </DropdownMenuItem>
                             ))
+                        }
+                        {
+                            demoUser.role === 'Admin' && (
+                                <DropdownMenuItem asChild key={'/admin'}>
+                                    <Link href={'/admin'} className="cursor-pointer">
+                                        <LayoutDashboard className="mr-2 size-4" />
+                                        Admin Panel
+                                    </Link>
+                                </DropdownMenuItem>
+                            )
                         }
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
