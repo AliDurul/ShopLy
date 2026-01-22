@@ -23,7 +23,7 @@ const demoUser = {
 };
 
 export default function HeaderAuthBtns() {
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(false);
 
     const getInitials = (name: string) => {
         return name

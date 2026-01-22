@@ -1,0 +1,9 @@
+@baseUrl = http://localhost
+
+### gateway
+get {{baseUrl}}:8000/health
+
+
+
+### catalog
+POST {{baseUrl}}:8003/
