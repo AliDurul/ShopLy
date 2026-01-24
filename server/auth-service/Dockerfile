@@ -25,6 +25,9 @@ COPY --chown=app:app --from=builder /app/shared ../shared
 COPY --chown=app:app --from=builder /app/auth-service/package*.json ./
 COPY --chown=app:app --from=builder /app/auth-service/dist ./dist
 COPY --chown=app:app --from=builder /app/auth-service/node_modules ./node_modules
+COPY --chown=app:app --from=builder /app/auth-service/prisma ./prisma
+COPY --chown=app:app --from=builder /app/auth-service/prisma.config.ts ./prisma.config.ts
+
 
 # Development files (src for ts-node)
 COPY --chown=app:app --from=builder /app/auth-service/src ./src
@@ -33,6 +36,3 @@ COPY --chown=app:app --from=builder /app/auth-service/tsconfig.json ./
 USER app
 
 # EXPOSE 8001
-
-# CMD ["yarn", "start"]
-CMD ["yarn", "dev"]

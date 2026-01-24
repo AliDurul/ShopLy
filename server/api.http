@@ -13,7 +13,7 @@ get http://localhost:8000/api/auth/health
 
 
 # @name login
-post http://localhost:8000/api/auth/login
+post http://localhost:8001/api/auth/login
 Content-Type: application/json
     
 {
@@ -24,11 +24,11 @@ Content-Type: application/json
 ### 
 
 # @name register
-post http://localhost:8000/api/auth/register
+post http://localhost:8001/register
 Content-Type: application/json
 
 {
-    "email":"test3@gmail.com",
+    "email":"test5@gmail.com",
     "password":"Test@1234"
 }
 

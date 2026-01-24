@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import { corsOptions, createErrorResponse, createSuccessResponse } from '@shared/utils';
 import { Request, Response, NextFunction } from 'express';
+import authRoutes from './auth.routes';
 
 
 async function start() {
@@ -25,6 +26,9 @@ async function start() {
     app.get('/health', (req, res) => {
         res.status(200).send(createSuccessResponse({ status: 'OK', timestamp: new Date().toISOString() }, 'Auth-service is healthy'));
     });
+
+    // routes
+    app.use(authRoutes);
 
     // 404 handler
     app.use('*splat', (req, res, next) => {
