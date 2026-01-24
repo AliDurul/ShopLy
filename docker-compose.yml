@@ -1,0 +1,57 @@
+version: '3.8'
+
+name: shoply-services
+
+services:
+  api-gateway:
+    build: 
+      context: .
+      dockerfile: server/api-gateway/Dockerfile
+    container_name: api-gateway
+    restart: unless-stopped
+    environment:
+      - PORT=8000
+      - AUTH_SERVICE_URL=http://auth-service:8001
+      - USER_SERVICE_URL=http://user-service:8002
+    ports:
+      - "8000:8000"
+    depends_on:
+      - auth-service
+    networks:
+      - shoply-network
+    develop:
+      watch:
+        - action: rebuild
+          path: ./server/api-gateway/package.json
+        - action: rebuild
+          path: ./server/api-gateway/yarn.lock
+        - action: sync
+          path: ./server/api-gateway/src
+          target: /app/src
+
+  auth-service:
+    build: 
+      context: .
+      dockerfile: server/auth-service/Dockerfile
+    container_name: auth-service
+    restart: unless-stopped
+    environment:
+      - PORT=8001
+    ports:
+      - "8001:8001"
+    networks:
+      - shoply-network
+    develop:
+      watch:
+        - action: rebuild
+          path: ./server/auth-service/package.json
+        - action: rebuild
+          path: ./server/auth-service/yarn.lock
+        - action: sync
+          path: ./server/auth-service/src
+          target: /app/src
+
+networks:
+  shoply-network:
+    driver: bridge
+    name: shoply-network

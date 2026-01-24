@@ -1,9 +1,107 @@
-@baseUrl = http://localhost
-
-### gateway
-get {{baseUrl}}:8000/health
+@token = Bearer {{login.response.body.data.accessToken}}
+@refreshToken = {{login.response.body.data.refreshToken}}
 
 
+# Health Check
+get http://localhost:8000/api/auth/health
 
-### catalog
-POST {{baseUrl}}:8003/
+
+############################# Api Gateway #############################
+
+
+### User Service ###
+
+
+# @name login
+post http://localhost:8000/api/auth/login
+Content-Type: application/json
+    
+{
+    "email":"test3@gmail.com",
+    "password":"Test@1234"
+}
+
+### 
+
+# @name register
+post http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+    "email":"test3@gmail.com",
+    "password":"Test@1234"
+}
+
+###
+
+# @name refresh
+post http://localhost:8000/api/auth/refresh
+Content-Type: application/json
+
+{
+    "refreshToken": "{{refreshToken}}"
+}
+
+###
+
+# @name logout
+post http://localhost:8000/api/auth/logout
+Content-Type: application/json
+Authorization: {{token}}
+
+
+###
+
+# @name deleteAccount
+delete http://localhost:8000/api/auth/
+Authorization: {{token}}
+
+
+
+### User Service ###
+
+###
+
+# @name getProfile
+get http://localhost:8000/api/users/
+Authorization: {{token}}
+
+###
+
+# @name updateProfile
+put http://localhost:8000/api/users/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "firstName": "John",
+    "lastName": "Doe",
+    "bio": "Software Developer"
+}
+
+
+### Note Service ###
+
+# @name createNote
+post http://localhost:8000/api/notes/
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+    "title": "New Note",
+    "content": "This is the content of the new note."
+}
+
+### 
+
+# @name getNotes
+get http://localhost:8000/api/notes/?page=1&limit=10
+Authorization: {{token}}
+
+
+### 
+
+# @name getNoteById
+get http://localhost:8000/api/notes/e67d4e13-8abb-4eae-b0ac-3d9de9a69163
+Authorization: {{token}}
+
