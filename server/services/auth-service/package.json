@@ -19,7 +19,9 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
-    "pg": "^8.17.2"
+    "pg": "^8.17.2",
+    "@shoply/shared": "0.1.0",
+    "@shared": "link:@shoply/shared"
   },
   "devDependencies": {
     "prisma": "^7.3.0"

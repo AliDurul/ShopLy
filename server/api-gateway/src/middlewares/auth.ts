@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { createErrorResponse } from "../../../shared/utils";
+import { createErrorResponse } from "@shared/utils";
 import jwt from "jsonwebtoken";
 
 
@@ -44,8 +44,8 @@ export function gatewayAuth(req: Request, res: Response, next: NextFunction): vo
             return;
         }
 
-        // user info 
-        req.user = decoded;
+        // user info
+        (req as any).user = decoded;
 
         // user info to headers
         req.headers["x-user-id"] = decoded.userId;

@@ -1,0 +1,57 @@
+{
+  "name": "@shoply/shared",
+  "version": "0.1.0",
+  "description": "Shared utilities, types, middleware, logger, and RabbitMQ client for ShopLy services",
+  "type": "commonjs",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "dev": "ts-node -r tsconfig-paths/register --transpile-only src/index.ts",
+    "clean": "rimraf dist"
+  },
+  "exports": {
+    ".": {
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./rabbitmq": {
+      "require": "./dist/rabbitmq/index.js",
+      "types": "./dist/rabbitmq/index.d.ts"
+    },
+    "./logger": {
+      "require": "./dist/logger/index.js",
+      "types": "./dist/logger/index.d.ts"
+    },
+    "./response": {
+      "require": "./dist/response/index.js",
+      "types": "./dist/response/index.d.ts"
+    },
+    "./middleware": {
+      "require": "./dist/middleware/index.js",
+      "types": "./dist/middleware/index.d.ts"
+    },
+    "./utils": {
+      "require": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./types": {
+      "require": "./dist/types/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "dependencies": {
+    "amqplib": "^0.10.5",
+    "pino": "^9.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "@types/amqplib": "^0.10.5",
+    "ts-node": "^10.9.2",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3",
+    "rimraf": "^6.0.1"
+  }
+}

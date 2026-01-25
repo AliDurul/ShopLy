@@ -2,7 +2,7 @@ import { Router } from "express";
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { Request, Response } from "express";
 import { Socket } from "net";
-import { createErrorResponse } from "../../../shared/utils";
+import { createErrorResponse } from "@shared/utils";
 import { servicesConfig } from "@/config/services";
 
 const router = Router();

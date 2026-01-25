@@ -2,11 +2,10 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "rootDir": "../",
+    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@shared/*": ["../node_modules/@shoply/shared/dist/*"]
+      "@shoply/shared/*": ["src/*"]
     }
   },
   "include": [
