@@ -6,7 +6,8 @@
   "private": true,
   "workspaces": [
     "api-gateway",
-    "auth-service"
+    "services/*",
+    "shared"
   ],
   "scripts": {
     "dev:all": "concurrently \"yarn workspace api-gateway dev\" \"yarn workspace auth-service dev\"",
@@ -16,11 +17,7 @@
     "build:gateway": "yarn workspace api-gateway build",
     "build:auth": "yarn workspace auth-service build",
     "start:all": "yarn workspaces run start",
-    "start:gateway": "yarn workspace api-gateway start",
-    "start:auth": "yarn workspace auth-service start",
-    "db:deploy": "yarn workspace auth-service db:deploy",
-    "db:migrate": "yarn workspace auth-service db:migrate",
-    "db:studio": "yarn workspace auth-service db:studio"
+    "start:gateway": "yarn workspace api-gateway start"
   },
   "dependencies": {
     "cors": "^2.8.6",

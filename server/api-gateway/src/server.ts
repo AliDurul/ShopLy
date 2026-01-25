@@ -2,9 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { createErrorResponse, createSuccessResponse } from '@shared/utils';
 import { Request, Response, NextFunction } from 'express';
 import proxyRoutes from './routes';
+import { createSuccessResponse, createErrorResponse } from '@shared/utils';
 
 
 async function start() {

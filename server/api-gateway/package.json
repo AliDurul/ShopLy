@@ -12,4 +12,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC"
+  ,
+  "dependencies": {
+    "@shoply/shared": "0.1.0",
+    "@shared": "link:@shoply/shared"
+  }
 }
