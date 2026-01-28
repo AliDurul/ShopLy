@@ -9,7 +9,7 @@ get http://localhost:8000/api/auth/health
 ############################# Api Gateway #############################
 
 
-### User Service ###
+### auth Service ###
 
 
 # @name login
@@ -24,11 +24,11 @@ Content-Type: application/json
 ### 
 
 # @name register
-post http://localhost:8001/register
+post http://localhost:8000/api/auth/register
 Content-Type: application/json
 
 {
-    "email":"test5@gmail.com",
+    "email":"test@gmail.com",
     "password":"Test@1234"
 }
 

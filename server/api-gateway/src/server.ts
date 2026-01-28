@@ -16,7 +16,6 @@ async function start() {
 
     // Middleware
     app.use(helmet({ crossOriginEmbedderPolicy: false }));
-    app.use(express.json());
     app.use(
         cors({
             origin: process.env.CORS_ORIGIN || "http://localhost:3000",
@@ -37,6 +36,8 @@ async function start() {
 
     // health check
     app.get('/health', (req, res) => {
+        
+        
         res.status(200).send(createSuccessResponse({ status: 'OK', timestamp: new Date().toISOString() }, 'API Gateway is healthy'));
     });
 

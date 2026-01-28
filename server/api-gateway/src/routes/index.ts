@@ -41,7 +41,7 @@ function createServiceProxy(targetUrl: string, pathRewrite: Record<string, strin
     return createProxyMiddleware(options);
 }
 
-router.use('/api/auth', createServiceProxy(servicesConfig.auth.url, { '^/api/auth': '' }));
+router.use('/api/auth', createServiceProxy(servicesConfig.auth.url, { '^/api/auth': '/' }));
 
 router.use('/api/users', createServiceProxy(servicesConfig.users.url, { '^/api/users': '' }));
 

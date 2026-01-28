@@ -2,7 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import { corsOptions, createErrorResponse, createSuccessResponse } from '@shared/utils';
+import { createErrorResponse, createSuccessResponse } from '@shared/utils';
+import { corsOptions } from '@shared/configs';
+
 import { Request, Response, NextFunction } from 'express';
 import authRoutes from './auth.routes';
 

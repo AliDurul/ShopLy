@@ -20,3 +20,63 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
+
+// ========== ENUMS ==========
+
+enum AuthProvider {
+  EMAIL
+  GOOGLE
+  FACEBOOK
+}
+
+enum AccountStatus {
+  ACTIVE
+  PENDING_VERIFICATION
+  SUSPENDED
+  DEACTIVATED
+}
+
+// ========== MODELS ==========
+
+model AuthCredential {
+  id           String       @id @default(uuid())
+  userId       String       @unique
+  authProvider AuthProvider
+
+  // Email/Password fields
+  email        String? @unique
+  passwordHash String?
+  passwordSalt String?
+
+  // Social auth fields
+  providerUserId       String?   @unique
+  providerAccessToken  String?   @db.Text
+  providerRefreshToken String?   @db.Text
+  providerTokenExpiry  DateTime?
+
+  // Verification & Security
+  isVerified              Boolean   @default(false)
+  verificationToken       String?
+  verificationTokenExpiry DateTime?
+  resetPasswordToken      String?
+  resetTokenExpiry        DateTime?
+  emailVerificationCode   String?
+  emailVerificationExpiry DateTime?
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Validation
+  // @@check(
+  //   (authProvider == "EMAIL" AND email != null) OR 
+  //   (authProvider != "EMAIL" AND providerUserId != null)
+  // )
+
+  // Indexes
+  @@index([userId])
+  @@index([email])
+  @@index([authProvider, providerUserId])
+  @@index([isVerified])
+  @@index([createdAt])
+}
