@@ -1,316 +1,262 @@
-# shoply
+# Nx React Repository
 
-1. Auth Service
+<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-Kimlik doğrulama servisi
+✨ A repository showcasing key [Nx](https://nx.dev) features for React monorepos ✨
 
-Sorumluluklar:
+🚀 If you haven't connected to Nx Cloud yet, [complete your setup here](https://cloud.nx.app/setup/connect-workspace/guide). Get faster builds with remote caching, distributed task execution, and self-healing CI. [See how your workspace can benefit](#nx-cloud).
 
-User register
+## 📦 Project Overview
 
-Login
+This repository demonstrates a production-ready React monorepo with:
 
-Refresh token
+- **2 Applications**
 
-Access token üretimi
+  - `shop` - React e-commerce application with product listings and detail views
+  - `api` - Backend API serving product data
 
-Password reset
+- **7 Libraries**
 
-MFA. opsiyonel
+  - `@org/shop-feature-products` - Product listing feature (React)
+  - `@org/shop-feature-product-detail` - Product detail feature (React)
+  - `@org/shop-data` - Data access layer for shop features
+  - `@org/shop-shared-ui` - Shared UI components
+  - `@org/models` - Shared data models
+  - `@org/api-products` - API product service library
+  - `@org/shared-test-utils` - Shared testing utilities
 
-Teknik:
+- **E2E Testing**
+  - `shop-e2e` - Playwright tests for the shop application
 
-JWT. kısa ömürlü
+## 🚀 Quick Start
 
-Refresh token DB veya Redis
+```bash
+# Clone the repository
+git clone <your-fork-url>
+cd <your-repository-name>
 
-OAuth2 desteklenebilir
+# Install dependencies
+npx install
 
-DB:
+# Serve the React shop application (this will simultaneously serve the API backend)
+npx nx serve shop
 
-users
+# ...or you can serve the API separately
+npx nx serve api
 
-credentials
+# Build all projects
+npx nx run-many -t build
 
-refresh_tokens
+# Run tests
+npx nx run-many -t test
 
-Bu servis:
+# Lint all projects
+npx nx run-many -t lint
 
-Ürün bilmez
+# Run e2e tests
+npx nx e2e shop-e2e
 
-Sipariş bilmez
+# Run tasks in parallel
 
-Sadece identity bilir
+npx nx run-many -t lint test build e2e --parallel=3
 
-2. User Service
+# Visualize the project graph
+npx nx graph
+```
 
-Kullanıcı profili ve domain bilgisi
+## ⭐ Featured Nx Capabilities
 
-Sorumluluklar:
+This repository showcases several powerful Nx features:
 
-Profil bilgileri
+### 1. 🔒 Module Boundaries
 
-Adresler
+Enforces architectural constraints using tags. Each project has specific dependencies it can use:
 
-Fatura bilgileri
+- `scope:shared` - Can be used by all projects
+- `scope:shop` - Shop-specific libraries
+- `scope:api` - API-specific libraries
+- `type:feature` - Feature libraries
+- `type:data` - Data access libraries
+- `type:ui` - UI component libraries
 
-User preferences
+**Try it out:**
 
-Auth Service ile fark:
+```bash
+# See the current project graph and boundaries
+npx nx graph
 
-Auth. kimliktir
+# View a specific project's details
+npx nx show project shop --web
+```
 
-User Service. business user’dır
+[Learn more about module boundaries →](https://nx.dev/features/enforce-module-boundaries)
 
-DB:
+### 2. 🎭 Playwright E2E Testing
 
-users
+End-to-end testing with Playwright is pre-configured:
 
-addresses
+```bash
+# Run e2e tests
+npx nx e2e shop-e2e
 
-preferences
+# Run e2e tests in CI mode
+npx nx e2e-ci shop-e2e
+```
 
-3. Catalog Service
+[Learn more about E2E testing →](https://nx.dev/technologies/test-tools/playwright/introduction#e2e-testing)
+
+### 3. ⚡ Vitest for Unit Testing
 
-Ürün dünyasının beyni
+Fast unit testing with Vitest for React libraries:
 
-Sorumluluklar:
+```bash
+# Test a specific library
+npx nx test shop-data
 
-Category
+# Test all projects
+npx nx run-many -t test
+```
 
-Brand
+[Learn more about Vite testing →](https://nx.dev/recipes/vite)
 
-Product
+### 4. 🔧 Self-Healing CI
 
-Attributes
+The CI pipeline includes `nx fix-ci` which automatically identifies and suggests fixes for common issues:
 
-Variants
+```bash
+# In CI, this command provides automated fixes
+npx nx fix-ci
+```
 
-Images
+This feature helps maintain a healthy CI pipeline by automatically detecting and suggesting solutions for:
 
-SEO data
+- Missing dependencies
+- Incorrect task configurations
+- Cache invalidation issues
+- Common build failures
 
-Asla yapmaz:
+[Learn more about self-healing CI →](https://nx.dev/ci/features/self-healing-ci)
 
-Stock düşmez
+## 📁 Project Structure
 
-Price hesaplamaz
+```
+├── apps/
+│   ├── shop/           [scope:shop]    - React e-commerce app
+│   ├── shop-e2e/                       - E2E tests for shop
+│   └── api/            [scope:api]     - Backend API
+├── libs/
+│   ├── shop/
+│   │   ├── feature-products/        [scope:shop,type:feature] - Product listing
+│   │   ├── feature-product-detail/  [scope:shop,type:feature] - Product details
+│   │   ├── data/                    [scope:shop,type:data]    - Data access
+│   │   └── shared-ui/               [scope:shop,type:ui]      - UI components
+│   ├── api/
+│   │   └── products/    [scope:api]    - Product service
+│   └── shared/
+│       ├── models/      [scope:shared,type:data] - Shared models
+│       └── test-utils/  [scope:shared]           - Testing utilities
+├── nx.json             - Nx configuration
+├── tsconfig.json       - TypeScript configuration
+└── eslint.config.mjs   - ESLint with module boundary rules
+```
 
-Order bilmez
+## 🏷️ Understanding Tags
 
-DB:
+This repository uses tags to enforce module boundaries:
 
-categories
+| Project                 | Tags                         | Can Import From              |
+| ----------------------- | ---------------------------- | ---------------------------- |
+| `shop`                  | `scope:shop`                 | `scope:shop`, `scope:shared` |
+| `api`                   | `scope:api`                  | `scope:api`, `scope:shared`  |
+| `shop-feature-products` | `scope:shop`, `type:feature` | `scope:shop`, `scope:shared` |
+| `shop-data`             | `scope:shop`, `type:data`    | `scope:shared`               |
+| `models`                | `scope:shared`, `type:data`  | Nothing (base library)       |
 
-products
+## 📚 Useful Commands
 
-attributes
+```bash
+# Project exploration
+npx nx graph                                    # Interactive dependency graph
+npx nx list                                     # List installed plugins
+npx nx show project shop --web                 # View project details
 
-variants
+# Development
+npx nx serve shop                              # Serve React app
+npx nx serve api                               # Serve backend API
+npx nx build shop                              # Build React app
+npx nx test shop-data                          # Test a specific library
+npx nx lint shop-feature-products              # Lint a specific library
 
-4. Pricing Service
+# Running multiple tasks
+npx nx run-many -t build                       # Build all projects
+npx nx run-many -t test --parallel=3          # Test in parallel
+npx nx run-many -t lint test build            # Run multiple targets
 
-Fiyat tek başına servis olmalı. evet
+# Affected commands (great for CI)
+npx nx affected -t build                       # Build only affected projects
+npx nx affected -t test                        # Test only affected projects
+```
 
-Sorumluluklar:
+## 🎯 Adding New Features
 
-Base price
+### Generate a new React application:
 
-Campaign price
+```bash
+npx nx g @nx/react:app my-app
+```
 
-Discount rules
+### Generate a new React library:
 
-Dynamic pricing
+```bash
+npx nx g @nx/react:lib my-lib
+```
 
-Region based pricing
+### Generate a new React component:
 
-Sebep:
+```bash
+npx nx g @nx/react:component my-component --project=my-lib
+```
 
-Kampanya işi karmaşıktır
+### Generate a new API library:
 
-Catalog’u kirletmezsin
+```bash
+npx nx g @nx/node:lib my-api-lib
+```
 
-DB:
+You can use `npx nx list` to see all available plugins and `npx nx list <plugin-name>` to see all generators for a specific plugin.
 
-prices
+## Nx Cloud
 
-discounts
+Nx Cloud ensures a [fast and scalable CI](https://nx.dev/ci/intro/why-nx-cloud?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) pipeline. It includes features such as:
 
-campaigns
+- [Remote caching](https://nx.dev/ci/features/remote-cache?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task distribution across multiple machines](https://nx.dev/ci/features/distribute-task-execution?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Automated e2e test splitting](https://nx.dev/ci/features/split-e2e-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- [Task flakiness detection and rerunning](https://nx.dev/ci/features/flaky-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-5. Inventory Service
+## Install Nx Console
 
-Stok tek başına yaşar
+Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
 
-Sorumluluklar:
+[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
 
-Stock count
+## 🔗 Learn More
 
-Stock reservation
+- [Nx Documentation](https://nx.dev)
+- [React Monorepo Tutorial](https://nx.dev/getting-started/tutorials/react-monorepo-tutorial)
+- [Module Boundaries](https://nx.dev/features/enforce-module-boundaries)
+- [Docker Integration](https://nx.dev/recipes/nx-release/release-docker-images)
+- [Playwright Testing](https://nx.dev/technologies/test-tools/playwright/introduction#e2e-testing)
+- [Vite with React](https://nx.dev/recipes/vite)
+- [Nx Cloud](https://nx.dev/ci/intro/why-nx-cloud)
+- [Releasing Packages](https://nx.dev/features/manage-releases)
 
-Stock release
+## 💬 Community
 
-Low stock alerts
+Join the Nx community:
 
-ÖNEMLİ:
-
-Sipariş anında stok düşmez
-
-Önce reserve edilir
-
-DB:
-
-product_stock
-
-reservations
-
-
-7. Order Service
-
-Business’ın kalbi
-
-Sorumluluklar:
-
-Order creation
-
-Order status
-
-Order lifecycle
-
-Saga orchestration
-
-Order states:
-
-CREATED
-
-PAYMENT_PENDING
-
-PAID
-
-SHIPPED
-
-COMPLETED
-
-CANCELLED
-
-DB:
-
-orders
-
-order_items
-
-order_events
-
-8. Payment Service
-
-En izole servis
-
-Sorumluluklar:
-
-Payment intent
-
-External provider integration
-
-Webhook handling
-
-Payment confirmation
-
-Asla:
-
-Order update etmez
-
-Stock update etmez
-
-Event yayınlar:
-
-PaymentSucceeded
-
-PaymentFailed
-
-9. Shipping Service
-
-Lojistik tarafı
-
-Sorumluluklar:
-
-Shipment creation
-
-Tracking number
-
-Shipping status
-
-DB:
-
-shipments
-
-carriers
-
-10. Notification Service
-
-Cross-cutting servis
-
-Sorumluluklar:
-
-Email
-
-SMS
-
-Push
-
-Webhook
-
-Dinler:
-
-Order events
-
-Payment events
-
-Shipping events
-
-4. Supporting servisler. Production’da şart
-11. Search Service
-
-ElasticSearch
-
-Catalog event’leri dinler
-
-Read optimized
-
-12. Review Service
-
-Product reviews
-
-Rating
-
-Moderation
-
-13. Admin Service
-
-Admin panel backend
-
-Role based access
-
-Audit logs
-
-5. Servisler arası ilişki. Kim kime konuşur
-
-Özet tablo:
-
-Servis	Senkron	Async
-API Gateway	Auth, Catalog	–
-Order	Payment, Inventory	Order events
-Payment	External	Payment events
-Inventory	–	Stock events
-Notification	–	Her şeyi dinler
-
-
-docker exec -it shoply_postgres psql -U postgres
-
-\l              -- List all databases
-\c shoply_auth  -- Connect to a database
-\dt             -- List tables
-\d User         -- View User table schema
-\q              -- Exit
-
-<!-- view data in table -->
-docker exec -it shoply_postgres psql -U postgres -d shoply_auth -c "SELECT * FROM \"User\";"
+- [Discord](https://go.nx.dev/community)
+- [X (Twitter)](https://twitter.com/nxdevtools)
+- [LinkedIn](https://www.linkedin.com/company/nrwl)
+- [YouTube](https://www.youtube.com/@nxdevtools)
+- [Blog](https://nx.dev/blog)
