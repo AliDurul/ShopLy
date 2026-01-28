@@ -260,3 +260,20 @@ Join the Nx community:
 - [LinkedIn](https://www.linkedin.com/company/nrwl)
 - [YouTube](https://www.youtube.com/@nxdevtools)
 - [Blog](https://nx.dev/blog)
+
+
+
+
+# Check the workspace structure
+nx graph
+
+# List all projects
+nx show projects
+
+# Generate API Gateway
+nx generate @nx/node:application api-gateway --directory=apps/backend/api-gateway --projectNameAndRootFormat=as-provided
+# Generate Shared UI Library
+nx generate @nx/react:library shared-ui --directory=libs/shared --style=css --unitTestRunner=vitest --linter=eslint
+
+# Delete the api project
+nx generate @nx/workspace:remove --project=api

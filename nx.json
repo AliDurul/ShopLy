@@ -91,7 +91,8 @@
       "exclude": [
         "apps/api-gateway-e2e/**/*",
         "apps/services/auth-e2e/**/*",
-        "apps/services/user-e2e/**/*"
+        "apps/services/user-e2e/**/*",
+        "apps/services/api-gateway-e2e/**/*"
       ]
     },
     {

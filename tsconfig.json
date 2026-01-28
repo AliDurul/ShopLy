@@ -4,12 +4,6 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/api-gateway-e2e"
-    },
-    {
-      "path": "./apps/api-gateway"
-    },
-    {
       "path": "./apps/services/auth-e2e"
     },
     {
@@ -23,6 +17,12 @@
     },
     {
       "path": "./apps/store-front"
+    },
+    {
+      "path": "./apps/services/api-gateway-e2e"
+    },
+    {
+      "path": "./apps/services/api-gateway"
     }
   ]
 }
