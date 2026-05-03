@@ -1,28 +1,4 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compileOnSave": false,
-  "files": [],
-  "references": [
-    {
-      "path": "./apps/services/auth-e2e"
-    },
-    {
-      "path": "./apps/services/auth"
-    },
-    {
-      "path": "./apps/services/user-e2e"
-    },
-    {
-      "path": "./apps/services/user"
-    },
-    {
-      "path": "./apps/store-front"
-    },
-    {
-      "path": "./apps/services/api-gateway-e2e"
-    },
-    {
-      "path": "./apps/services/api-gateway"
-    }
-  ]
+  "extends": "@workspace/typescript-config/base.json"
 }
+
